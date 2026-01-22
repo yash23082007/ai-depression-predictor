@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { predictRisk } from '../services/api';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
@@ -7,7 +7,6 @@ const emojis = ['😃', '🙂', '😐', '😟', '😨', '😱']; // 0 to 5
 
 const AssessmentForm = () => {
     const navigate = useNavigate();
-    const location = useLocation();
 
     // Check if user came from Home and agreed
     // If not, we show the modal on mount
