@@ -2,6 +2,14 @@
 
 A FERN stack (Flask, Express-like Python, React, Node/MongoDB) application to predict student depression risk based on lifestyle factors.
 
+
+[![Deploy Backend](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/yash23082007/ai-depression-predictor)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yash23082007/ai-depression-predictor/tree/main/client)
+
+## Links
+- **Live Demo:** [depressionana.in](https://depressionana.in) (Coming Soon)
+- **Repository:** [github.com/yash23082007/ai-depression-predictor](https://github.com/yash23082007/ai-depression-predictor)
+
 ## Table of Contents
 - [About](#about)
 - [Features](#features)
