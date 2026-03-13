@@ -101,7 +101,7 @@ const AssessmentForm = () => {
                         <input
                             type="range"
                             name="academic_pressure"
-                            min="0" max="5"
+                            min="1" max="5"
                             value={formData.academic_pressure}
                             onChange={handleSliderChange}
                             className="range-slider accent-medical-500 w-full"
@@ -120,7 +120,7 @@ const AssessmentForm = () => {
                         <input
                             type="range"
                             name="study_satisfaction"
-                            min="0" max="5"
+                            min="1" max="5"
                             value={formData.study_satisfaction}
                             onChange={handleSliderChange}
                             className="range-slider accent-medical-500 w-full"
@@ -139,7 +139,7 @@ const AssessmentForm = () => {
                         <input
                             type="range"
                             name="financial_stress"
-                            min="0" max="5"
+                            min="1" max="5"
                             value={formData.financial_stress}
                             onChange={handleSliderChange}
                             className="range-slider accent-medical-500 w-full"
@@ -155,7 +155,7 @@ const AssessmentForm = () => {
                         <input
                             type="range"
                             name="work_hours"
-                            min="0" max="12"
+                            min="1" max="12"
                             value={formData.work_hours}
                             onChange={handleSliderChange}
                             className="range-slider accent-medical-500 w-full"
