@@ -7,7 +7,11 @@ import datetime
 from db import get_db
 
 app = Flask(__name__)
-CORS(app)
+# Allow local dev and the deployed Vercel frontend
+CORS(app, resources={r"/*": {"origins": [
+    "http://localhost:3000",
+    "https://ai-depression-predictor.vercel.app"
+]}})
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'models', 'depression_model.pkl')
