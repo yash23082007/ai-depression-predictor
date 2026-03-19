@@ -2,18 +2,15 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://ai-depression-predictor-1.onrender.com/api';
 
-const apiClient = axios.create({
-    baseURL: API_URL,
-    timeout: 60000, // 60s to handle Render free-tier cold starts
-});
-
 const MAX_RETRIES = 2;
 
 export const predictRisk = async (data) => {
     let lastError;
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
         try {
-            const response = await apiClient.post('predict', data);
+            const response = await axios.post(`${API_URL}/predict`, data, {
+                timeout: 60000 // 60s to handle Render free-tier cold starts
+            });
             return response.data;
         } catch (error) {
             lastError = error;
