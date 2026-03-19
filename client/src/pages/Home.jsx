@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaArrowRight, FaBrain, FaRegHeart } from 'react-icons/fa';
+import { FaArrowRight, FaRegHeart } from 'react-icons/fa';
 
 const Home = () => {
     const [showModal, setShowModal] = useState(false);
