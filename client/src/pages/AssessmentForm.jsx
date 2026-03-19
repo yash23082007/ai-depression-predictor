@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { predictRisk } from '../services/api';
-import { FaExclamationTriangle } from 'react-icons/fa';
 
 const emojis = ['😃', '🙂', '😐', '😟', '😨', '😱']; // 0 to 5
 
 const AssessmentForm = () => {
     const navigate = useNavigate();
 
-    // Check if user came from Home and agreed
-    // If not, we show the modal on mount
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        // Simple logic: if no state passed from navigation, assume direct access -> show modal
-        // Or we could always show it to be safe, but let's be nice.
-        // Actually, previous request asked for "also in assessment section", implies redundancy is desired or direct access protection.
         setShowModal(true);
     }, []);
 
@@ -52,36 +46,37 @@ const AssessmentForm = () => {
             navigate('/result', { state: { result, formData } });
         } catch (error) {
             console.error("Error predicting result:", error);
-            alert("Failed to get prediction. Please check if the backend is running.");
+            alert("Failed to review your check-in. Please ensure the server is working.");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-100 animate-fade-in relative">
-            <h2 className="text-3xl font-bold text-slate-800 mb-8 text-center">Depression Risk Self-Assessment</h2>
+        <div className="max-w-3xl mx-auto bg-white p-6 sm:p-10 rounded-3xl shadow-subtle border border-zinc-100 animate-slide-up relative mt-8 mb-16">
+            <h2 className="text-3xl font-bold text-zinc-900 mb-8 text-center tracking-tight">Well-being Check-in</h2>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-10">
                 {/* Identity Section */}
-                <section className="grid md:grid-cols-2 gap-6 p-6 bg-slate-50 rounded-xl hover:shadow-md transition-shadow">
+                <section className="grid md:grid-cols-2 gap-6 p-6 sm:p-8 bg-zinc-50/50 rounded-2xl border border-zinc-100/80 transition-all hover:bg-zinc-50 relative">
+                    <div className="absolute top-0 left-0 w-2 h-full bg-sage-400 rounded-l-2xl opacity-50"></div>
                     <div>
-                        <label className="block text-slate-700 font-semibold mb-2">Name</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your name" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-500 outline-none transition-all" required />
+                        <label className="block text-zinc-600 text-sm font-semibold mb-2">How should we call you?</label>
+                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="First name or nickname" className="w-full p-3.5 bg-white border border-zinc-200 rounded-xl focus:border-sage-400 focus:ring-4 focus:ring-sage-100 outline-none transition-all text-zinc-800 placeholder-zinc-400" required />
                     </div>
                     <div>
-                        <label className="block text-slate-700 font-semibold mb-2">Age</label>
-                        <input type="number" name="age" value={formData.age} onChange={handleChange} min="15" max="35" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-500 outline-none transition-all" required />
+                        <label className="block text-zinc-600 text-sm font-semibold mb-2">Age</label>
+                        <input type="number" name="age" value={formData.age} onChange={handleChange} min="15" max="99" className="w-full p-3.5 bg-white border border-zinc-200 rounded-xl focus:border-sage-400 focus:ring-4 focus:ring-sage-100 outline-none transition-all text-zinc-800" required />
                     </div>
                     <div className="md:col-span-2">
-                        <label className="block text-slate-700 font-semibold mb-2">Gender</label>
-                        <div className="flex space-x-4">
-                            {['Male', 'Female'].map(g => (
+                        <label className="block text-zinc-600 text-sm font-semibold mb-2">Identity</label>
+                        <div className="flex p-1 bg-zinc-100/80 rounded-xl border border-zinc-200/50">
+                            {['Male', 'Female', 'Other'].map(g => (
                                 <button
                                     key={g}
                                     type="button"
                                     onClick={() => setFormData({ ...formData, gender: g })}
-                                    className={`flex-1 py-3 rounded-lg border transition-all transform active:scale-95 ${formData.gender === g ? 'bg-medical-500 text-white border-medical-500 shadow-md' : 'bg-white text-gray-500 border-gray-200 hover:border-medical-300 hover:bg-slate-50'}`}
+                                    className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${formData.gender === g ? 'bg-white text-zinc-900 shadow-sm' : 'text-zinc-500 hover:text-zinc-700'}`}
                                 >
                                     {g}
                                 </button>
@@ -91,12 +86,12 @@ const AssessmentForm = () => {
                 </section>
 
                 {/* Sliders Section */}
-                <section className="grid md:grid-cols-2 gap-8 p-6 bg-slate-50 rounded-xl hover:shadow-md transition-shadow">
+                <section className="grid md:grid-cols-2 gap-10 p-6 sm:p-8 bg-white rounded-2xl border border-zinc-100/80 shadow-sm transition-all relative">
                     {/* Academic Pressure */}
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <label className="text-slate-700 font-semibold text-lg">Academic Pressure</label>
-                            <span className="text-2xl animate-bounce" style={{ animationDuration: '2s' }}>{emojis[formData.academic_pressure]}</span>
+                    <div className="flex flex-col justify-end">
+                        <div className="flex justify-between items-end mb-4">
+                            <label className="text-zinc-800 font-medium">Pressure from studies/work</label>
+                            <span className="text-2xl filter grayscale opacity-80 transition-all duration-300 hover:grayscale-0">{emojis[formData.academic_pressure]}</span>
                         </div>
                         <input
                             type="range"
@@ -104,18 +99,18 @@ const AssessmentForm = () => {
                             min="1" max="5"
                             value={formData.academic_pressure}
                             onChange={handleSliderChange}
-                            className="range-slider accent-medical-500 w-full"
+                            className="range-slider w-full"
                         />
-                        <div className="flex justify-between text-xs text-gray-400 mt-1">
-                            <span>Low</span><span>High</span>
+                        <div className="flex justify-between text-xs text-zinc-400 mt-2 font-medium">
+                            <span>Manageable</span><span>Overwhelming</span>
                         </div>
                     </div>
 
                     {/* Study Satisfaction */}
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <label className="text-slate-700 font-semibold text-lg">Study Satisfaction</label>
-                            <span className="text-2xl animate-bounce" style={{ animationDuration: '2s' }}>{emojis[5 - formData.study_satisfaction]}</span> {/* Inverted emoji logic for positive trait */}
+                    <div className="flex flex-col justify-end">
+                        <div className="flex justify-between items-end mb-4">
+                            <label className="text-zinc-800 font-medium">Satisfaction with progress</label>
+                            <span className="text-2xl filter grayscale opacity-80 transition-all duration-300 hover:grayscale-0">{emojis[5 - formData.study_satisfaction]}</span>
                         </div>
                         <input
                             type="range"
@@ -123,18 +118,18 @@ const AssessmentForm = () => {
                             min="1" max="5"
                             value={formData.study_satisfaction}
                             onChange={handleSliderChange}
-                            className="range-slider accent-medical-500 w-full"
+                            className="range-slider w-full"
                         />
-                        <div className="flex justify-between text-xs text-gray-400 mt-1">
-                            <span>Low</span><span>High</span>
+                        <div className="flex justify-between text-xs text-zinc-400 mt-2 font-medium">
+                            <span>Struggling</span><span>Doing Great</span>
                         </div>
                     </div>
 
                     {/* Financial Stress */}
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <label className="text-slate-700 font-semibold text-lg">Financial Stress</label>
-                            <span className="text-2xl animate-bounce" style={{ animationDuration: '2s' }}>{emojis[formData.financial_stress]}</span>
+                    <div className="flex flex-col justify-end">
+                        <div className="flex justify-between items-end mb-4">
+                            <label className="text-zinc-800 font-medium">Financial concerns</label>
+                            <span className="text-2xl filter grayscale opacity-80 transition-all duration-300 hover:grayscale-0">{emojis[formData.financial_stress]}</span>
                         </div>
                         <input
                             type="range"
@@ -142,15 +137,18 @@ const AssessmentForm = () => {
                             min="1" max="5"
                             value={formData.financial_stress}
                             onChange={handleSliderChange}
-                            className="range-slider accent-medical-500 w-full"
+                            className="range-slider w-full"
                         />
+                        <div className="flex justify-between text-xs text-zinc-400 mt-2 font-medium">
+                            <span>None</span><span>Keeping me up</span>
+                        </div>
                     </div>
 
                     {/* Work Hours */}
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <label className="text-slate-700 font-semibold text-lg">Work/Study Hours</label>
-                            <span className="text-medical-600 font-bold">{formData.work_hours} hr/day</span>
+                    <div className="flex flex-col justify-end">
+                        <div className="flex justify-between items-end mb-4">
+                            <label className="text-zinc-800 font-medium">Hours working/studying</label>
+                            <span className="text-sage-600 font-bold bg-sage-50 px-3 py-1 rounded-md text-sm">{formData.work_hours} hr/day</span>
                         </div>
                         <input
                             type="range"
@@ -158,78 +156,104 @@ const AssessmentForm = () => {
                             min="1" max="12"
                             value={formData.work_hours}
                             onChange={handleSliderChange}
-                            className="range-slider accent-medical-500 w-full"
+                            className="range-slider w-full"
                         />
+                        <div className="flex justify-between text-xs text-zinc-400 mt-2 font-medium">
+                            <span>1h</span><span>12h+</span>
+                        </div>
                     </div>
                 </section>
 
                 {/* Dropdowns Section */}
-                <section className="grid md:grid-cols-2 gap-6 p-6 bg-slate-50 rounded-xl hover:shadow-md transition-shadow">
+                <section className="grid md:grid-cols-2 gap-6 p-6 sm:p-8 bg-zinc-50/50 rounded-2xl border border-zinc-100/80 transition-all hover:bg-zinc-50">
                     <div>
-                        <label className="block text-slate-700 font-semibold mb-2">Sleep Duration</label>
-                        <select name="sleep_duration" value={formData.sleep_duration} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-medical-500 transition-all hover:border-medical-300 cursor-pointer">
-                            {['Less than 5 Hours', '5-6 Hours', '7-8 Hours', 'More than 8 Hours'].map(o => <option key={o} value={o}>{o}</option>)}
-                        </select>
+                        <label className="block text-zinc-600 text-sm font-semibold mb-2">How much sleep do you get?</label>
+                        <div className="relative">
+                            <select name="sleep_duration" value={formData.sleep_duration} onChange={handleChange} className="w-full p-3.5 bg-white border border-zinc-200 rounded-xl focus:border-sage-400 focus:ring-4 focus:ring-sage-100 outline-none transition-all text-zinc-800 appearance-none cursor-pointer">
+                                {['Less than 5 Hours', '5-6 Hours', '7-8 Hours', 'More than 8 Hours'].map(o => <option key={o} value={o}>{o}</option>)}
+                            </select>
+                            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-zinc-400 text-xs">▼</div>
+                        </div>
                     </div>
                     <div>
-                        <label className="block text-slate-700 font-semibold mb-2">Dietary Habits</label>
-                        <select name="dietary_habits" value={formData.dietary_habits} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-medical-500 transition-all hover:border-medical-300 cursor-pointer">
-                            {['Healthy', 'Moderate', 'Unhealthy'].map(o => <option key={o} value={o}>{o}</option>)}
-                        </select>
+                        <label className="block text-zinc-600 text-sm font-semibold mb-2">How balanced is your diet?</label>
+                        <div className="relative">
+                            <select name="dietary_habits" value={formData.dietary_habits} onChange={handleChange} className="w-full p-3.5 bg-white border border-zinc-200 rounded-xl focus:border-sage-400 focus:ring-4 focus:ring-sage-100 outline-none transition-all text-zinc-800 appearance-none cursor-pointer">
+                                {['Healthy', 'Moderate', 'Unhealthy'].map(o => <option key={o} value={o}>{o}</option>)}
+                            </select>
+                            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-zinc-400 text-xs">▼</div>
+                        </div>
                     </div>
                     <div>
-                        <label className="block text-slate-700 font-semibold mb-2">Suicidal Thoughts?</label>
-                        <select name="suicidal_thoughts" value={formData.suicidal_thoughts} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-medical-500 transition-all hover:border-medical-300 cursor-pointer">
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
-                        </select>
+                        <label className="block text-zinc-600 text-sm font-semibold mb-2">Do you have thoughts of giving up?</label>
+                        <div className="flex p-1 bg-zinc-100/80 rounded-xl border border-zinc-200/50">
+                            {['No', 'Yes'].map(opt => (
+                                <button
+                                    key={opt}
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, suicidal_thoughts: opt })}
+                                    className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${formData.suicidal_thoughts === opt ? (opt === 'Yes' ? 'bg-red-50 text-red-700 shadow-sm border border-red-100' : 'bg-white text-zinc-900 shadow-sm') : 'text-zinc-500 hover:text-zinc-700'}`}
+                                >
+                                    {opt}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                     <div>
-                        <label className="block text-slate-700 font-semibold mb-2">Family History?</label>
-                        <select name="family_history" value={formData.family_history} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-medical-500 transition-all hover:border-medical-300 cursor-pointer">
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
-                        </select>
+                        <label className="block text-zinc-600 text-sm font-semibold mb-2">Does your family have history of mental health challenges?</label>
+                        <div className="flex p-1 bg-zinc-100/80 rounded-xl border border-zinc-200/50">
+                            {['No', 'Yes'].map(opt => (
+                                <button
+                                    key={opt}
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, family_history: opt })}
+                                    className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${formData.family_history === opt ? 'bg-white text-zinc-900 shadow-sm' : 'text-zinc-500 hover:text-zinc-700'}`}
+                                >
+                                    {opt}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </section>
 
-                <div className="flex gap-4 pt-4">
-                    <button type="button" onClick={() => navigate('/')} className="flex-1 py-4 border border-red-400 text-red-500 rounded-lg font-bold hover:bg-red-50 transition-colors transform hover:-translate-y-1">CANCEL</button>
-                    <button type="submit" disabled={loading} className="flex-1 py-4 bg-medical-600 text-white rounded-lg font-bold hover:bg-medical-500 transition-colors shadow-lg disabled:opacity-50 transform hover:-translate-y-1 hover:shadow-xl">
-                        {loading ? 'ANALYZING...' : 'SUBMIT ASSESSMENT'}
+                <div className="flex flex-col-reverse sm:flex-row gap-4 pt-6 mt-10 border-t border-zinc-100">
+                    <button type="button" onClick={() => navigate('/')} className="w-full sm:w-1/3 py-4 rounded-xl font-semibold text-zinc-500 hover:bg-zinc-50 transition-colors border border-transparent">
+                        Cancel
+                    </button>
+                    <button type="submit" disabled={loading} className="w-full sm:w-2/3 py-4 bg-zinc-900 text-white rounded-xl font-semibold hover:bg-zinc-800 transition-all shadow-subtle disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-[0.98]">
+                        {loading ? 'Reviewing your responses...' : 'Complete Check-in'}
                     </button>
                 </div>
-                <p className="text-center text-xs text-gray-400 mt-4">By continuing, you agree to our Privacy Policy.</p>
+                <p className="text-center text-xs text-zinc-400 mt-4 leading-relaxed max-w-lg mx-auto">
+                    By confirming, you acknowledge that this is a soft guide to understanding your habits and not a medical diagnosis.
+                </p>
             </form>
 
-            {/* Disclaimer Modal (Same as Home) */}
+            {/* Disclaimer Modal */}
             {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
-                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-2 bg-yellow-400"></div>
-
-                        <div className="flex justify-center mb-6 text-yellow-500">
-                            <FaExclamationTriangle className="text-5xl animate-pulse-slow" />
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-900/40 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-2xl shadow-hover max-w-md w-full p-8 relative flex flex-col text-left">
+                        
+                        <div className="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center mb-6">
+                            <div className="w-2 h-2 rounded-full bg-amber-500"></div>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-slate-800 mb-4 text-center">Important Disclaimer</h3>
+                        <h3 className="text-xl font-semibold text-zinc-900 mb-3">Just a quick note</h3>
 
-                        <p className="text-gray-600 mb-6 text-center leading-relaxed">
-                            This tool is a <strong>predictive AI model</strong> for educational purposes only. It is <strong>NOT</strong> a medical diagnosis.
-                            <br /><br />
-                            Results are based on statistical patterns and may not reflect your actual clinical state.
+                        <p className="text-zinc-500 mb-8 leading-relaxed text-sm">
+                            This check-in looks at patterns in daily habits to provide gentle guidance. It is designed to encourage self-reflection and is not a clinical diagnosis or a replacement for professional care. Please take care of yourself.
                         </p>
 
-                        <div className="flex gap-4">
+                        <div className="flex gap-3">
                             <button
                                 onClick={() => navigate('/')}
-                                className="flex-1 py-3 border border-gray-300 rounded-lg font-semibold text-gray-500 hover:bg-gray-50 transition-colors"
+                                className="flex-1 py-3 px-4 rounded-xl font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
                             >
                                 Go Back
                             </button>
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="flex-1 py-3 bg-medical-600 text-white rounded-lg font-bold hover:bg-medical-500 transition-colors shadow-lg"
+                                className="flex-1 py-3 px-4 bg-zinc-900 text-white rounded-xl font-medium hover:bg-zinc-800 transition-colors"
                             >
                                 I Understand
                             </button>

@@ -11,67 +11,67 @@ const getRecommendations = (formData, isHighRisk) => {
 
     if (formData.sleep_duration === 'Less than 5 Hours' || formData.sleep_duration === '5-6 Hours') {
         tips.push({
-            icon: <FaBed className="text-medical-500 mt-1 flex-shrink-0" />,
-            title: 'Improve Sleep Hygiene',
-            text: `You reported sleeping only "${formData.sleep_duration}". Aim for at least 7-8 hours of sleep per night to regulate mood and reduce stress hormones.`,
-            border: 'border-medical-500',
+            icon: <FaBed className="text-zinc-500 mt-1 flex-shrink-0" />,
+            title: 'Try to prioritize rest',
+            text: `You mentioned sleeping only "${formData.sleep_duration}". A little extra sleep (aiming for 7-8 hours) can make a huge difference in how you process daily stress.`,
+            border: 'border-zinc-300',
         });
     }
 
     if (formData.dietary_habits === 'Unhealthy' || formData.dietary_habits === 'Moderate') {
         tips.push({
-            icon: <FaAppleAlt className="text-green-500 mt-1 flex-shrink-0" />,
-            title: 'Adopt Healthier Dietary Habits',
-            text: `Your dietary habits were reported as "${formData.dietary_habits}". A balanced diet rich in omega-3s, fruits, and vegetables is linked to improved mental well-being.`,
-            border: 'border-green-500',
+            icon: <FaAppleAlt className="text-emerald-500 mt-1 flex-shrink-0" />,
+            title: 'Nourish your body',
+            text: `Your diet was noted as "${formData.dietary_habits}". Sometimes, incorporating a few more fresh fruits or balanced meals can gently lift your energy levels.`,
+            border: 'border-emerald-200',
         });
     }
 
     if (formData.academic_pressure >= 4) {
         tips.push({
-            icon: <FaBook className="text-yellow-500 mt-1 flex-shrink-0" />,
-            title: 'Manage Academic Pressure',
-            text: `High academic pressure (${formData.academic_pressure}/5) can be a major stressor. Consider time-blocking, speaking with a counselor, or joining a study group to reduce the load.`,
-            border: 'border-yellow-500',
+            icon: <FaBook className="text-amber-500 mt-1 flex-shrink-0" />,
+            title: 'Ease the pressure',
+            text: `It sounds like expectations are weighing heavily on you. Remind yourself that it's okay to take breaks, talk to a counselor, or study with a friend to lighten the load.`,
+            border: 'border-amber-200',
         });
     }
 
     if (formData.financial_stress >= 4) {
         tips.push({
             icon: <FaDollarSign className="text-orange-500 mt-1 flex-shrink-0" />,
-            title: 'Address Financial Stress',
-            text: `Significant financial stress (${formData.financial_stress}/5) can heavily impact mental health. Reach out to your institution's financial aid office or seek guidance on budgeting.`,
-            border: 'border-orange-500',
+            title: 'Navigating financial worries',
+            text: `Financial concerns can take a massive toll. Please don't hesitate to reach out to a campus aid office or a trusted advisor—you don't have to figure it all out alone.`,
+            border: 'border-orange-200',
         });
     }
 
     if (formData.work_hours >= 9) {
         tips.push({
             icon: <FaClock className="text-purple-500 mt-1 flex-shrink-0" />,
-            title: 'Balance Work & Study Hours',
-            text: `Working/studying ${formData.work_hours} hours a day may be contributing to burnout. Try to schedule regular breaks and protect time for rest and social activities.`,
-            border: 'border-purple-500',
+            title: 'Finding time to breathe',
+            text: `Working or studying ${formData.work_hours} hours a day is a recipe for burnout. Try to carve out just 30 minutes a day that are completely yours to unplug.`,
+            border: 'border-purple-200',
         });
     }
 
     if (formData.suicidal_thoughts === 'Yes' || formData.family_history === 'Yes' || isHighRisk) {
         tips.push({
             icon: <FaHandsHelping className="text-red-500 mt-1 flex-shrink-0" />,
-            title: 'Seek Professional Support',
+            title: 'You are not alone',
             text: formData.suicidal_thoughts === 'Yes'
-                ? 'You indicated experiencing suicidal thoughts. Please reach out to a mental health professional or a crisis helpline (iCall: 9152987821) immediately. You are not alone.'
-                : 'Given your risk profile or family history, speaking with a licensed therapist or counselor can provide significant relief and coping strategies.',
-            border: 'border-red-500',
+                ? 'You mentioned having very difficult thoughts. Please, reach out to someone who can help right now. Call a friend, a helpline (like iCall: 9152987821), or a professional. People want to help you.'
+                : 'Given the strain you are under, talking to a licensed therapist or counselor could truly help. Having a safe space to talk is incredibly valuable.',
+            border: 'border-red-200',
         });
     }
 
     // Fallback positive tip if no specific concerns
     if (tips.length === 0) {
         tips.push({
-            icon: <FaCheckCircle className="text-emerald-500 mt-1 flex-shrink-0" />,
-            title: 'Keep Up the Great Habits',
-            text: 'Your responses suggest healthy lifestyle choices. Continue prioritizing sleep, nutrition, and social connections to maintain your mental well-being.',
-            border: 'border-emerald-500',
+            icon: <FaCheckCircle className="text-sage-500 mt-1 flex-shrink-0" />,
+            title: 'Keep taking care of yourself',
+            text: 'Your responses reflect some really solid daily habits. Keep prioritizing your peace, sleep, and connections with others.',
+            border: 'border-sage-200',
         });
     }
 
@@ -90,13 +90,13 @@ const ResultDashboard = () => {
     const isHighRisk = risk_score > 50;
 
     const chartData = {
-        labels: ['Risk', 'Safe'],
+        labels: ['Attention Needed', 'Doing Well'],
         datasets: [
             {
                 data: [risk_score, 100 - risk_score],
                 backgroundColor: [
-                    isHighRisk ? '#ef4444' : '#10b981',
-                    '#e2e8f0',
+                    isHighRisk ? '#f87171' : '#35a171', // red-400 or sage-500
+                    '#f4f4f5', // zinc-100
                 ],
                 borderWidth: 0,
                 circumference: 180,
@@ -112,50 +112,50 @@ const ResultDashboard = () => {
             legend: { display: false },
             tooltip: { enabled: false }
         },
-        cutout: '75%',
+        cutout: '78%',
     };
 
     const recommendations = getRecommendations(formData, isHighRisk);
 
     return (
-        <div className="max-w-4xl mx-auto flex flex-col items-center py-10">
-            <h2 className="text-3xl font-bold text-slate-800 mb-10">Assessment Results</h2>
+        <div className="max-w-5xl mx-auto flex flex-col items-center py-6 animate-slide-up">
+            <h2 className="text-3xl font-bold text-zinc-900 mb-10 tracking-tight">Your Check-in Results</h2>
 
-            <div className="grid md:grid-cols-2 gap-12 w-full">
+            <div className="grid md:grid-cols-5 gap-8 w-full">
                 {/* Gauge Chart Section */}
-                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center relative">
-                    <div className="w-64 h-32 mb-8 relative">
+                <div className="md:col-span-2 bg-white p-8 rounded-3xl shadow-subtle border border-zinc-100 flex flex-col items-center justify-center relative">
+                    <div className="w-full max-w-[240px] h-32 mb-6 relative">
                         <Doughnut data={chartData} options={chartOptions} />
-                        <div className="absolute inset-0 flex items-end justify-center pb-2">
-                            <span className={`text-4xl font-bold ${isHighRisk ? 'text-red-500' : 'text-emerald-500'}`}>{risk_score}%</span>
+                        <div className="absolute inset-0 flex flex-col items-center justify-end pb-2">
+                            <span className={`text-4xl font-bold tracking-tighter ${isHighRisk ? 'text-red-500' : 'text-sage-600'}`}>{risk_score}%</span>
                         </div>
                     </div>
-                    <p className="text-gray-500 mt-4 font-medium uppercase tracking-wide">Depression Risk Score</p>
+                    <p className="text-zinc-400 mt-2 text-xs font-semibold uppercase tracking-widest">Strain Indicator</p>
 
-                    <div className={`mt-6 px-6 py-2 rounded-full font-bold text-lg flex items-center gap-2 ${isHighRisk ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-600'}`}>
-                        {isHighRisk ? <FaExclamationTriangle /> : <FaCheckCircle />}
-                        {label}
+                    <div className={`mt-8 px-6 py-2.5 rounded-2xl font-semibold text-sm flex items-center gap-2.5 border ${isHighRisk ? 'bg-red-50 text-red-600 border-red-100' : 'bg-sage-50 text-sage-700 border-sage-100'}`}>
+                        {isHighRisk ? <FaExclamationTriangle className="text-red-500" /> : <FaCheckCircle className="text-sage-500" />}
+                        {label === 'High' ? 'Needs Attention' : 'Looking Good'}
                     </div>
 
                     {formData.name && (
-                        <p className="text-gray-400 text-sm mt-4">Assessment for: <strong className="text-slate-600">{formData.name}</strong></p>
+                        <p className="text-zinc-400 text-sm mt-6">Prepared for: <strong className="text-zinc-700 font-semibold">{formData.name}</strong></p>
                     )}
                 </div>
 
                 {/* Advice Section */}
-                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center">
-                    <h3 className="text-xl font-bold text-slate-800 mb-4">AI Analysis & Recommendations</h3>
-                    <p className="text-gray-600 mb-6 leading-relaxed">
-                        Based on the factors provided, our Random Forest model indicates a <strong className={isHighRisk ? 'text-red-500' : 'text-emerald-500'}>{label.toLowerCase()}</strong> probability of depression.
+                <div className="md:col-span-3 bg-white p-8 sm:p-10 rounded-3xl shadow-subtle border border-zinc-100 flex flex-col">
+                    <h3 className="text-xl font-bold text-zinc-900 mb-3">Insights & Gentle Advice</h3>
+                    <p className="text-zinc-500 mb-8 leading-relaxed text-sm">
+                        Based on your daily patterns, it looks like you might be experiencing a <strong className={isHighRisk ? 'text-red-500' : 'text-sage-600 font-semibold'}>{label.toLowerCase()}</strong> amount of emotional strain right now. Here are some gentle suggestions that might help.
                     </p>
 
-                    <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
+                    <div className="space-y-4 max-h-[340px] overflow-y-auto pr-2 custom-scrollbar">
                         {recommendations.map((rec, i) => (
-                            <div key={i} className={`p-4 bg-slate-50 rounded-lg border-l-4 ${rec.border} flex gap-3`}>
-                                {rec.icon}
+                            <div key={i} className={`p-5 bg-zinc-50/50 rounded-2xl border-l-[3px] border border-zinc-100 ${rec.border} flex gap-4 transition-all hover:bg-zinc-50`}>
+                                <div className="mt-0.5">{rec.icon}</div>
                                 <div>
-                                    <h4 className="font-semibold text-slate-800">{rec.title}</h4>
-                                    <p className="text-sm text-gray-500 mt-1">{rec.text}</p>
+                                    <h4 className="font-semibold text-zinc-900 text-sm mb-1">{rec.title}</h4>
+                                    <p className="text-sm text-zinc-500 leading-relaxed">{rec.text}</p>
                                 </div>
                             </div>
                         ))}
@@ -163,12 +163,12 @@ const ResultDashboard = () => {
                 </div>
             </div>
 
-            <div className="mt-12 flex items-center gap-6">
-                <Link to="/assessment" className="flex items-center gap-2 text-gray-500 hover:text-medical-600 font-semibold transition-colors">
-                    ↩ Retake Assessment
+            <div className="mt-12 flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+                <Link to="/assessment" className="px-6 py-3 rounded-xl font-medium text-zinc-600 hover:bg-zinc-100 transition-colors flex items-center gap-2">
+                    ↩ Revisit Check-in
                 </Link>
-                <Link to="/" className="flex items-center gap-2 text-gray-500 hover:text-medical-600 font-semibold transition-colors">
-                    <FaHome /> Return to Home
+                <Link to="/" className="px-6 py-3 bg-zinc-900 text-white rounded-xl font-medium hover:bg-zinc-800 transition-colors flex items-center gap-2 shadow-subtle">
+                    <FaHome className="mb-0.5" /> Return to Home
                 </Link>
             </div>
         </div>

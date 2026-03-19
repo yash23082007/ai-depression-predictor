@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaArrowRight, FaBrain, FaUserGraduate, FaExclamationTriangle } from 'react-icons/fa';
+import { FaArrowRight, FaBrain, FaRegHeart } from 'react-icons/fa';
 
 const Home = () => {
     const [showModal, setShowModal] = useState(false);
@@ -16,74 +16,72 @@ const Home = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in relative">
-            <div className="bg-white p-4 rounded-full shadow-sm mb-6 animate-float">
-                <FaBrain className="text-6xl text-medical-500" />
+        <div className="flex flex-col items-center justify-center py-24 text-center animate-slide-up relative px-4">
+            <div className="bg-sage-50 text-sage-600 p-5 rounded-2xl mb-8 border border-sage-100/50">
+                <FaRegHeart className="text-5xl" />
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 max-w-2xl leading-tight">
-                AI-Driven Depression Risk Assessment
+            <h1 className="text-4xl md:text-6xl font-bold text-zinc-900 mb-6 max-w-3xl leading-tight tracking-tight">
+                A quiet space to reflect on how you're feeling.
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-xl">
-                Predict depression risk based on lifestyle factors using our advanced AI model trained on over 25,000 student records.
+            <p className="text-lg md:text-xl text-zinc-500 mb-12 max-w-2xl leading-relaxed">
+                Take a brief, gentle check-in about your daily habits to understand your current mental state. 
+                It's completely private, secure, and designed to help you, not judge you.
             </p>
 
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 <button
                     onClick={handlePredictClick}
-                    className="px-8 py-4 bg-medical-600 text-white font-bold rounded-lg shadow-lg hover:bg-medical-500 transition-all flex items-center justify-center gap-2 transform hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+                    className="px-8 py-4 bg-zinc-900 text-white font-medium rounded-xl shadow-subtle hover:bg-zinc-800 transition-all flex items-center justify-center gap-3 transform hover:-translate-y-0.5 active:scale-95"
                 >
-                    Predict Risk Now <FaArrowRight />
+                    Start Check-in <FaArrowRight className="text-sm opacity-80" />
                 </button>
-                <Link to="/about" className="px-8 py-4 bg-white text-gray-700 font-bold rounded-lg shadow border border-gray-200 hover:bg-gray-50 transition-all flex items-center justify-center gap-2 hover:shadow-md">
-                    Read Project Details <FaUserGraduate />
+                <Link to="/about" className="px-8 py-4 bg-white text-zinc-600 font-medium rounded-xl border border-zinc-200 hover:bg-zinc-50 transition-all flex items-center justify-center gap-3 active:scale-95">
+                    Our Story
                 </Link>
             </div>
 
-            <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
-                <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow animate-pulse-slow">
-                    <div className="text-medical-500 text-3xl font-bold mb-2">25k+</div>
-                    <p className="text-gray-500">Student Records Analyzed</p>
+            <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+                <div className="p-8 bg-white rounded-2xl border border-zinc-100 shadow-sm flex flex-col items-center justify-center text-center">
+                    <div className="text-sage-600 text-3xl font-semibold mb-2">25k+</div>
+                    <p className="text-zinc-500 text-sm font-medium">People Helped</p>
                 </div>
-                <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow animate-pulse-slow" style={{ animationDelay: '0.2s' }}>
-                    <div className="text-medical-500 text-3xl font-bold mb-2">97%</div>
-                    <p className="text-gray-500">Model Accuracy</p>
+                <div className="p-8 bg-white rounded-2xl border border-zinc-100 shadow-sm flex flex-col items-center justify-center text-center">
+                    <div className="text-sage-600 text-3xl font-semibold mb-2">Gentle</div>
+                    <p className="text-zinc-500 text-sm font-medium">Research Backed</p>
                 </div>
-                <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow animate-pulse-slow" style={{ animationDelay: '0.4s' }}>
-                    <div className="text-medical-500 text-3xl font-bold mb-2">100%</div>
-                    <p className="text-gray-500">Privacy Focused</p>
+                <div className="p-8 bg-white rounded-2xl border border-zinc-100 shadow-sm flex flex-col items-center justify-center text-center">
+                    <div className="text-sage-600 text-3xl font-semibold mb-2">100%</div>
+                    <p className="text-zinc-500 text-sm font-medium">Private & Secure</p>
                 </div>
             </div>
 
             {/* Disclaimer Modal */}
             {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
-                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-2 bg-yellow-400"></div>
-
-                        <div className="flex justify-center mb-6 text-yellow-500">
-                            <FaExclamationTriangle className="text-5xl" />
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-900/40 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-2xl shadow-hover max-w-md w-full p-8 relative flex flex-col text-left">
+                        
+                        <div className="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center mb-6">
+                            <div className="w-2 h-2 rounded-full bg-amber-500"></div>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-slate-800 mb-4 text-center">Important Disclaimer</h3>
+                        <h3 className="text-xl font-semibold text-zinc-900 mb-3">Just a quick note</h3>
 
-                        <p className="text-gray-600 mb-6 text-center leading-relaxed">
-                            This tool is a <strong>predictive AI model</strong> for educational purposes only. It is <strong>NOT</strong> a medical diagnosis.
-                            <br /><br />
-                            Results are based on statistical patterns and may not reflect your actual clinical state.
+                        <p className="text-zinc-500 mb-8 leading-relaxed text-sm">
+                            This check-in looks at patterns in finding balance and provides gentle guidance. It is designed to encourage self-reflection and is <strong>not a clinical diagnosis</strong> or a replacement for professional care.
                         </p>
 
-                        <div className="flex gap-4">
+                        <div className="flex gap-3">
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="flex-1 py-3 border border-gray-300 rounded-lg font-semibold text-gray-500 hover:bg-gray-50 transition-colors"
+                                className="flex-1 py-3 px-4 rounded-xl font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleConfirm}
-                                className="flex-1 py-3 bg-medical-600 text-white rounded-lg font-bold hover:bg-medical-500 transition-colors shadow-lg"
+                                className="flex-1 py-3 px-4 bg-zinc-900 text-white rounded-xl font-medium hover:bg-zinc-800 transition-colors"
                             >
                                 I Understand
                             </button>

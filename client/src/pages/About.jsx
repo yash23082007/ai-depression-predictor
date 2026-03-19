@@ -1,69 +1,61 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 const About = () => {
     return (
-        <div className="max-w-3xl mx-auto py-10 animate-fade-in">
-            <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100 transition-all hover:shadow-xl">
-                <h2 className="text-3xl font-bold text-slate-800 mb-6">About the Project</h2>
+        <div className="max-w-3xl mx-auto py-10 animate-slide-up">
+            <div className="bg-white p-8 sm:p-12 rounded-3xl shadow-subtle border border-zinc-100">
+                <h2 className="text-3xl font-bold text-zinc-900 mb-8 tracking-tight">Our Story</h2>
 
-                <div className="space-y-6 mb-8">
-                    <section className="hover:bg-slate-50 p-4 rounded-lg transition-colors">
-                        <h3 className="text-xl font-bold text-slate-800 mb-2">Our Mission</h3>
-                        <p className="text-gray-600 leading-relaxed">
-                            Mental health is as critical as physical health, yet it often goes unnoticed until it becomes severe.
-                            Our mission is to democratize access to preliminary mental health insights using the power of Artificial Intelligence.
-                            By providing a private, secure, and immediate assessment tool, we aim to encourage students to reflect on their lifestyle choices
-                            and seek professional help when needed. This tool is not a diagnosis but a stepping stone towards better self-awareness.
+                <div className="space-y-8 mb-10 text-zinc-600 leading-relaxed">
+                    <section className="group">
+                        <h3 className="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-sage-600 transition-colors">Why we built this</h3>
+                        <p>
+                            Mental well-being is deeply personal, yet it often goes unnoticed until we feel completely overwhelmed.
+                            Our team created this space to offer a quiet, accessible way to check in with yourself. 
+                            By providing a private and gentle reflection tool, we hope to encourage people to pause, 
+                            understand their lifestyle habits, and realize that it's okay to ask for support. This isn't a diagnosis—just a helping hand.
                         </p>
                     </section>
 
-                    <section className="hover:bg-slate-50 p-4 rounded-lg transition-colors">
-                        <h3 className="text-xl font-bold text-slate-800 mb-2">Methodology</h3>
-                        <p className="text-gray-600 leading-relaxed mb-4">
-                            The core of this application is a <strong>Random Forest Classifier</strong>, a robust ensemble learning method.
-                            The model constructs a multitude of decision trees during training and outputs the class that is the mode of the classes (depression risk level) of the individual trees.
+                    <section className="group">
+                        <h3 className="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-sage-600 transition-colors">How it works</h3>
+                        <p className="mb-4">
+                            We believe that small, daily habits have a massive impact on how we feel. This tool was crafted using insights from studies observing thousands of everyday routines.
                         </p>
-                        <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                            <li><strong>Data Source:</strong> Trained on a synthetic dataset of 25,000 student records, meticulously designed to mimic real-world distributions found in the Kaggle "Student Depression Dataset".</li>
-                            <li><strong>Features Analyzed:</strong> We analyze 10 key parameters including Academic Pressure, Sleep Duration, Dietary Habits, Study Satisfaction, and more.</li>
-                            <li><strong>Accuracy:</strong> The model achieves an accuracy of approximately <strong>97%</strong> on unseen test data, minimizing false positives while ensuring high sensitivity.</li>
-                            <li><strong>Tech Stack:</strong> Built with React.js for a responsive UI, Python Flask as the API gateway, and MongoDB for secure, anonymous data logging.</li>
+                        <ul className="list-disc pl-5 space-y-2 text-zinc-500">
+                            <li><strong className="text-zinc-700">Looking at the whole picture:</strong> We focus on key factors like academic and financial stress, sleep hygiene, and diet.</li>
+                            <li><strong className="text-zinc-700">Finding patterns:</strong> By recognizing combinations of these habits, we can gently guide you toward finding balance.</li>
+                            <li><strong className="text-zinc-700">Completely private:</strong> Your check-in responses stay entirely between you and the screen. Nothing is tied to your identity.</li>
                         </ul>
                     </section>
 
-                    <section className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400 hover:bg-yellow-100 transition-colors">
-                        <h3 className="text-lg font-bold text-yellow-800 mb-1">Disclaimer</h3>
-                        <p className="text-sm text-yellow-700">
-                            This application is for <strong>educational and informational purposes only</strong>. It is not a substitute for professional medical advice, diagnosis, or treatment.
-                            If you or someone you know is struggling, please seek help from a qualified mental health professional or contact local emergency services immediately.
-                        </p>
-                    </section>
-
-                    <section className="hover:bg-slate-50 p-4 rounded-lg transition-colors">
-                        <h3 className="text-xl font-bold text-slate-800 mb-2">References</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-gray-600 text-sm">
-                            <li>Breiman, L. (2001). <em>Random Forests</em>. Machine Learning, 45(1), 5-32.</li>
-                            <li>Pedregosa, F., et al. (2011). <em>Scikit-learn: Machine Learning in Python</em>. JMLR 12, pp. 2825-2830.</li>
-                            <li>Kaggle. (2023). <em>Student Depression Dataset</em>. Retrieved from <a href="https://www.kaggle.com" target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">Kaggle.com</a>.</li>
-                        </ul>
+                    <section className="bg-amber-50/50 p-5 rounded-2xl border border-amber-100 flex gap-4">
+                        <div className="text-amber-500 mt-0.5">⚠️</div>
+                        <div>
+                            <h3 className="text-sm font-semibold text-amber-900 mb-1">A gentle reminder</h3>
+                            <p className="text-sm text-amber-800/80 leading-relaxed">
+                                This space is for <strong>educational and self-reflection purposes only</strong>. It is not a substitute for professional medical care, therapy, or diagnosis.
+                                If the weight feels like too much to carry right now, please reach out to a professional or a loved one. Support is always out there.
+                            </p>
+                        </div>
                     </section>
                 </div>
 
-                <div className="border-t border-gray-100 pt-8">
-                    <h3 className="text-xl font-semibold text-slate-800 mb-4">Connect with the Developer</h3>
-                    <div className="flex gap-4">
-                        <a href="https://github.com/yash23082007" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors transform hover:-translate-y-1">
-                            <FaGithub /> GitHub
+                <div className="border-t border-zinc-100 pt-8">
+                    <h3 className="text-lg font-semibold text-zinc-900 mb-6">Say Hello</h3>
+                    <div className="flex flex-wrap gap-3">
+                        <a href="https://github.com/yash23082007" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-zinc-50 text-zinc-600 rounded-xl hover:bg-zinc-100 hover:text-zinc-900 transition-all text-sm font-medium border border-zinc-200/50">
+                            <FaGithub className="text-lg" /> GitHub
                         </a>
-                        <a href="https://www.linkedin.com/in/yash-vijay-b0a75937a" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors transform hover:-translate-y-1">
-                            <FaLinkedin /> LinkedIn
+                        <a href="https://www.linkedin.com/in/yash-vijay-b0a75937a" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-zinc-50 text-zinc-600 rounded-xl hover:bg-zinc-100 hover:text-[#0a66c2] transition-all text-sm font-medium border border-zinc-200/50">
+                            <FaLinkedin className="text-lg" /> LinkedIn
                         </a>
-                        <a href="https://www.instagram.com/yash_vj23" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors transform hover:-translate-y-1">
-                            <FaInstagram /> Instagram
+                        <a href="https://www.instagram.com/yash_vj23" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-zinc-50 text-zinc-600 rounded-xl hover:bg-zinc-100 hover:text-[#e1306c] transition-all text-sm font-medium border border-zinc-200/50">
+                            <FaInstagram className="text-lg" /> Instagram
                         </a>
-                        <a href="mailto:ktanayash@gmail.com" className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors transform hover:-translate-y-1">
-                            ✉️ Email
+                        <a href="mailto:ktanayash@gmail.com" className="flex items-center gap-2.5 px-5 py-2.5 bg-zinc-50 text-zinc-600 rounded-xl hover:bg-zinc-100 hover:text-red-500 transition-all text-sm font-medium border border-zinc-200/50">
+                            <FaEnvelope className="text-lg" /> Email
                         </a>
                     </div>
                 </div>
