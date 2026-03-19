@@ -4,14 +4,10 @@
 
 @layer base {
   body {
-    background-color: #fafafa;
-    /* Soft ambient mesh gradient for a modern SaaS feel */
-    background-image: 
-      radial-gradient(at 0% 0%, hsla(152,43%,90%,1) 0, transparent 50%), 
-      radial-gradient(at 50% 0%, hsla(225,39%,90%,1) 0, transparent 50%), 
-      radial-gradient(at 100% 0%, hsla(339,49%,90%,1) 0, transparent 50%);
-    background-attachment: fixed;
-    color: #18181b; /* zinc-900 */
+    background-color: #fafaf9; /* stone-50 */
+    /* Subtle noise texture mimicking premium paper/tactile feel */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    color: #1c1917; /* stone-900 */
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -19,37 +15,41 @@
   }
 
   *:focus-visible {
-    outline: 2px solid #5abf8f; /* sage-400 */
+    outline: 2px solid #1c1917; /* High contrast focus */
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Premium Glassmorphism Container */
-  .glass-panel {
-    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-hover rounded-3xl transition-all duration-300;
+  /* Premium Minimalist Card, replacing glass-panel */
+  .premium-card {
+    @apply bg-white border border-stone-200 shadow-card rounded-2xl transition-all duration-300;
+  }
+  
+  .premium-card:hover {
+    @apply shadow-card-hover border-stone-300;
   }
 
-  /* Sleek Input Fields */
-  .glass-input {
-    @apply w-full p-4 bg-white/60 backdrop-blur-md border border-zinc-200/60 rounded-xl focus:border-sage-400 focus:ring-4 focus:ring-sage-100/50 outline-none transition-all text-zinc-800 placeholder-zinc-400 hover:bg-white/80;
+  /* Solid, Crisp Inputs */
+  .premium-input {
+    @apply w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:border-stone-900 focus:ring-1 focus:ring-stone-900 outline-none transition-all text-stone-900 placeholder-stone-400 hover:border-stone-300;
   }
 
   /* Minimalist sleek range slider */
   .range-slider {
-    @apply w-full h-2 bg-zinc-200/80 rounded-full appearance-none flex cursor-pointer outline-none shadow-inner;
+    @apply w-full h-1.5 bg-stone-200 rounded-full appearance-none flex cursor-pointer outline-none;
   }
   
   .range-slider::-webkit-slider-thumb {
-    @apply appearance-none w-6 h-6 rounded-full bg-white border-2 border-sage-500 shadow-md cursor-grab transition-transform;
+    @apply appearance-none w-5 h-5 rounded-full bg-white border-2 border-stone-800 shadow-crisp cursor-grab transition-transform;
   }
   
   .range-slider::-webkit-slider-thumb:hover {
-    @apply scale-110 shadow-lg border-sage-600;
+    @apply scale-110 border-stone-900;
   }
   
   .range-slider::-webkit-slider-thumb:active {
-    @apply cursor-grabbing scale-95 bg-sage-50;
+    @apply cursor-grabbing scale-95 bg-stone-100;
   }
 
   /* Minimalist select override for hiding default arrow where needed */

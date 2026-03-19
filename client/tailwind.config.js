@@ -18,18 +18,22 @@ module.exports = {
                     800: '#1e523c',
                     900: '#194432',
                 },
-                surface: {
-                    50: '#fafafa', // soft off-white background
-                    100: '#f5f5f5',
-                    200: '#e5e5e5',
+                stone: {
+                    50: '#fafaf9',
+                    100: '#f5f5f4',
+                    200: '#e7e5e4',
+                    300: '#d6d3d1',
+                    400: '#a8a29e',
                 }
             },
             boxShadow: {
-                'subtle': '0 4px 20px -2px rgba(0, 0, 0, 0.03)',
-                'hover': '0 8px 30px -4px rgba(0, 0, 0, 0.06)',
+                'card': '0px 2px 8px rgba(0, 0, 0, 0.04), 0px 1px 2px rgba(0, 0, 0, 0.02)',
+                'card-hover': '0px 8px 24px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.04)',
+                'crisp': '0px 1px 2px rgba(0, 0, 0, 0.05)',
             },
             fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
+                serif: ['Playfair Display', 'Georgia', 'serif'],
             }
         },
     },
