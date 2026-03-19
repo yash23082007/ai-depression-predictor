@@ -54,23 +54,23 @@ const Home = () => {
                     <FaRegHeart className="text-4xl" />
                 </div>
 
-                <h1 className="text-5xl md:text-7xl font-extrabold text-zinc-900 mb-6 leading-tight tracking-tight drop-shadow-sm">
+                <h1 className="text-5xl md:text-7xl font-extrabold text-zinc-900 mb-8 leading-snug tracking-tight drop-shadow-sm">
                     A quiet space to <br className="hidden md:block"/> reflect on how you're feeling.
                 </h1>
 
-                <p className="text-lg md:text-xl text-zinc-600 mb-12 max-w-2xl leading-relaxed">
+                <p className="text-lg md:text-xl text-zinc-600 mb-12 max-w-[600px] leading-relaxed mx-auto">
                     Take a brief, gentle check-in about your daily habits to understand your current mental state. 
                     It's highly private, secure, and designed to support your personal growth.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto justify-center">
                     <button
                         onClick={handlePredictClick}
-                        className="px-8 py-4 bg-zinc-900 text-white font-medium rounded-2xl shadow-hover hover:bg-zinc-800 hover:shadow-lg transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1 active:scale-95 text-lg"
+                        className="px-10 py-5 bg-zinc-900 text-white font-bold rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.15)] hover:bg-zinc-800 hover:shadow-[0_8px_40px_rgb(0,0,0,0.2)] transition-all flex items-center justify-center gap-4 transform hover:-translate-y-1 active:scale-95 text-xl"
                     >
-                        Start Check-in <FaArrowRight className="text-sm opacity-80" />
+                        Start Check-in <FaArrowRight className="text-lg opacity-90" />
                     </button>
-                    <Link to="/about" className="px-8 py-4 bg-white/80 backdrop-blur-md text-zinc-700 font-medium rounded-2xl border border-zinc-200/60 hover:bg-white hover:border-zinc-300 transition-all flex items-center justify-center shadow-subtle hover:shadow-md transform hover:-translate-y-1 active:scale-95 text-lg">
+                    <Link to="/about" className="px-10 py-5 bg-white/80 backdrop-blur-md text-zinc-700 font-bold rounded-2xl border border-zinc-200/60 hover:bg-white hover:border-zinc-300 transition-all flex items-center justify-center shadow-sm hover:shadow-md transform hover:-translate-y-1 active:scale-95 text-xl">
                         Our Story
                     </Link>
                 </div>
@@ -78,26 +78,26 @@ const Home = () => {
 
             {/* Value Props / Stats */}
             <div ref={statsRef} className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl z-10 pb-20">
-                <div className="glass-panel p-10 flex flex-col items-center text-center">
-                    <div className="w-14 h-14 rounded-2xl bg-sage-50 text-sage-500 flex items-center justify-center mb-6 text-2xl shadow-inner">
+                <div className="glass-panel p-10 flex flex-col items-center text-center bg-sage-50/40 border border-sage-200/50 shadow-md">
+                    <div className="w-16 h-16 rounded-2xl bg-sage-100 text-sage-600 flex items-center justify-center mb-6 text-3xl shadow-inner">
                         <FaUserFriends />
                     </div>
-                    <div className="text-zinc-900 text-3xl font-bold mb-2">25k+</div>
-                    <p className="text-zinc-500 font-medium tracking-wide text-sm uppercase">People Helped</p>
+                    <div className="text-zinc-900 text-3xl font-extrabold mb-2">25k+</div>
+                    <p className="text-zinc-600 font-semibold tracking-wide text-sm uppercase">People Helped</p>
                 </div>
-                <div className="glass-panel p-10 flex flex-col items-center text-center translate-y-0 md:translate-y-8">
-                    <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center mb-6 text-2xl shadow-inner">
+                <div className="glass-panel p-10 flex flex-col items-center text-center translate-y-0 md:translate-y-8 bg-blue-50/40 border border-blue-200/50 shadow-md">
+                    <div className="w-16 h-16 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-6 text-3xl shadow-inner">
                         <FaLeaf />
                     </div>
-                    <div className="text-zinc-900 text-3xl font-bold mb-2">Gentle</div>
-                    <p className="text-zinc-500 font-medium tracking-wide text-sm uppercase">Research Backed</p>
+                    <div className="text-zinc-900 text-3xl font-extrabold mb-2">Gentle</div>
+                    <p className="text-zinc-600 font-semibold tracking-wide text-sm uppercase">Research Backed</p>
                 </div>
-                <div className="glass-panel p-10 flex flex-col items-center text-center">
-                    <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center mb-6 text-2xl shadow-inner">
+                <div className="glass-panel p-10 flex flex-col items-center text-center bg-amber-50/40 border border-amber-200/50 shadow-md">
+                    <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mb-6 text-3xl shadow-inner">
                         <FaShieldAlt />
                     </div>
-                    <div className="text-zinc-900 text-3xl font-bold mb-2">100%</div>
-                    <p className="text-zinc-500 font-medium tracking-wide text-sm uppercase">Private & Secure</p>
+                    <div className="text-zinc-900 text-3xl font-extrabold mb-2">100%</div>
+                    <p className="text-zinc-600 font-semibold tracking-wide text-sm uppercase">Private & Secure</p>
                 </div>
             </div>
 
@@ -118,13 +118,13 @@ const Home = () => {
                         <div className="flex gap-4">
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="flex-1 py-3.5 px-4 rounded-xl font-medium text-zinc-600 hover:bg-zinc-100 transition-colors"
+                                className="flex-1 py-3.5 px-4 rounded-xl font-bold text-zinc-600 hover:bg-zinc-100 transition-colors"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleConfirm}
-                                className="flex-1 py-3.5 px-4 bg-zinc-900 text-white rounded-xl font-medium hover:bg-zinc-800 hover:shadow-lg transition-all transform active:scale-95"
+                                className="flex-1 py-3.5 px-4 bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-800 hover:shadow-lg transition-all transform active:scale-95"
                             >
                                 I Understand
                             </button>

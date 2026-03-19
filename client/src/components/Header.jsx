@@ -16,10 +16,10 @@ const Header = () => {
                     </div>
                     <h1 className="text-xl font-bold tracking-tight">MindCare<span className="text-sage-500">.</span></h1>
                 </Link>
-                <nav className="hidden md:flex space-x-8">
-                    <Link to="/" className={`text-sm font-medium transition-colors ${isActive('/') ? 'text-zinc-900' : 'text-zinc-400 hover:text-zinc-900'}`}>Home</Link>
-                    <Link to="/assessment" className={`text-sm font-medium transition-colors ${isActive('/assessment') ? 'text-zinc-900' : 'text-zinc-400 hover:text-zinc-900'}`}>Assessment</Link>
-                    <Link to="/about" className={`text-sm font-medium transition-colors ${isActive('/about') ? 'text-zinc-900' : 'text-zinc-400 hover:text-zinc-900'}`}>About</Link>
+                <nav className="hidden md:flex space-x-10 items-center">
+                    <Link to="/" className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${isActive('/') ? 'bg-zinc-900 text-white shadow-md' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 opacity-80 hover:opacity-100'}`}>Home</Link>
+                    <Link to="/assessment" className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${isActive('/assessment') ? 'bg-zinc-900 text-white shadow-md' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 opacity-80 hover:opacity-100'}`}>Assessment</Link>
+                    <Link to="/about" className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${isActive('/about') ? 'bg-zinc-900 text-white shadow-md' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 opacity-80 hover:opacity-100'}`}>About</Link>
                 </nav>
             </div>
         </header>
