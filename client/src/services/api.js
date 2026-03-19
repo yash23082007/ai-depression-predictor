@@ -13,7 +13,7 @@ export const predictRisk = async (data) => {
     let lastError;
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
         try {
-            const response = await apiClient.post('/predict', data);
+            const response = await apiClient.post('predict', data);
             return response.data;
         } catch (error) {
             lastError = error;
