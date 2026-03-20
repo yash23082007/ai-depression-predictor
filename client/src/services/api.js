@@ -29,3 +29,5 @@ export const predictRisk = async (data) => {
     }
     throw lastError;
 };
+
+
