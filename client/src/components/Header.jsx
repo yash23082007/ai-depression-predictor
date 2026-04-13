@@ -8,18 +8,18 @@ const Header = () => {
     const isActive = (path) => location.pathname === path;
 
     return (
-        <header className="bg-ink-50/80 backdrop-blur-lg sticky top-0 z-40 border-b border-ink-200">
+        <header className="bg-white/70 backdrop-blur-md sticky top-0 z-40 border-b border-border">
             <div className="container mx-auto px-6 py-5 flex justify-between items-center max-w-5xl">
-                <Link to="/" className="flex items-center space-x-3 text-ink-900 group">
-                    <div className="w-10 h-10 flex items-center justify-center text-ink-900 group-hover:text-brand-600 transition-colors duration-500">
+                <Link to="/" className="flex items-center space-x-3 text-text group">
+                    <div className="w-10 h-10 flex items-center justify-center text-primary group-hover:text-indigo-600 transition-colors duration-500">
                         <Logo className="w-8 h-8" />
                     </div>
-                    <h1 className="text-xl font-serif font-medium tracking-[0.15em] uppercase mt-0.5">MindCare</h1>
+                    <h1 className="text-xl font-heading font-semibold tracking-wide">MindCare</h1>
                 </Link>
                 <nav className="hidden md:flex space-x-8 items-center">
-                    <Link to="/" className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/') ? 'bg-ink-900 text-ink-50 shadow-crisp' : 'text-ink-500 hover:text-ink-900 hover:bg-ink-100'}`}>Home</Link>
-                    <Link to="/assessment" className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/assessment') ? 'bg-ink-900 text-ink-50 shadow-crisp' : 'text-ink-500 hover:text-ink-900 hover:bg-ink-100'}`}>Assessment</Link>
-                    <Link to="/about" className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/about') ? 'bg-ink-900 text-ink-50 shadow-crisp' : 'text-ink-500 hover:text-ink-900 hover:bg-ink-100'}`}>About</Link>
+                    <Link to="/" className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/') ? 'bg-[#6366F1] text-white shadow-sm' : 'text-subtext hover:text-text hover:bg-indigo-50'}`}>Home</Link>
+                    <Link to="/assessment" className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/assessment') ? 'bg-[#6366F1] text-white shadow-sm' : 'text-subtext hover:text-text hover:bg-indigo-50'}`}>Assessment</Link>
+                    <Link to="/about" className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/about') ? 'bg-[#6366F1] text-white shadow-sm' : 'text-subtext hover:text-text hover:bg-indigo-50'}`}>About</Link>
                 </nav>
             </div>
         </header>
