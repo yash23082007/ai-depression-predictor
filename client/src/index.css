@@ -4,30 +4,32 @@
 
 @layer base {
   body {
-    background-color: #f8f9fa; /* ink-50 */
-    /* Subtle noise texture mimicking premium paper/tactile feel */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-    color: #212529; /* ink-900 */
+    background: linear-gradient(135deg, #EEF2FF, #F8FAFC);
+    color: #1E293B; /* text */
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
 
   *:focus-visible {
-    outline: 2px solid #212529; /* High contrast focus */
+    outline: 2px solid #6366F1; /* Primary focus */
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Premium Minimalist Card, replacing glass-panel */
+  /* Premium Minimalist Card */
   .premium-card {
-    @apply bg-white border border-ink-200 shadow-card rounded-2xl transition-all duration-300;
+    @apply bg-white border border-border shadow-lg rounded-2xl transition-all duration-300;
   }
   
   .premium-card:hover {
-    @apply shadow-card-hover border-ink-300;
+    @apply shadow-xl border-indigo-200;
   }
 
   /* Solid, Crisp Inputs */
