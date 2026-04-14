@@ -9,6 +9,7 @@ import datetime
 import shap
 from db import get_db
 
+app = Flask(__name__)
 # Allow local dev and Vercel domains (including previews)
 CORS(app, resources={r"/*": {"origins": [
     "http://localhost:3000",
