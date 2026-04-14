@@ -6,3 +6,4 @@ pymongo
 numpy
 gunicorn
 requests
+shap

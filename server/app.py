@@ -4,6 +4,7 @@ import pickle
 import pandas as pd
 import os
 import datetime
+import shap
 from db import get_db
 
 app = Flask(__name__)
@@ -35,6 +36,7 @@ CATEGORICAL_FIELDS = {
 
 model = None
 encoders = None
+explainer = None
 
 
 def load_artifacts():
@@ -45,10 +47,16 @@ def load_artifacts():
             model = pickle.load(model_file)
         with open(ENCODERS_PATH, 'rb') as encoders_file:
             encoders = pickle.load(encoders_file)
-        print('Model and encoders loaded successfully.')
+        
+        if model is not None:
+             global explainer
+             explainer = shap.TreeExplainer(model)
+             
+        print('Model, encoders, and SHAP explainer loaded successfully.')
     except FileNotFoundError:
         model = None
         encoders = None
+        explainer = None
         print('Error: model files not found. Please run train_model.py first.')
 
 
@@ -154,6 +162,25 @@ def predict():
         prediction_prob = float(model.predict_proba(input_df)[0][1])
         risk_percentage = round(prediction_prob * 100, 2)
         label = 'High Risk' if risk_percentage > 50 else 'Low Risk'
+        
+        # Calculate SHAP explanations
+        shap_values = explainer.shap_values(input_df)
+        # Handle cases where shap_values might be a list (standard for binary RF in SHAP)
+        if isinstance(shap_values, list):
+            # We want the impact on the positive class (class 1)
+            impacts = shap_values[1][0]
+        else:
+            impacts = shap_values[0]
+            
+        feature_names = input_df.columns.tolist()
+        feature_impacts = sorted(zip(feature_names, impacts), key=lambda x: x[1], reverse=True)
+        
+        # Get top 3 positive contributors
+        top_contributors = [
+            {"feature": name, "impact": round(float(val), 4)} 
+            for name, val in feature_impacts if val > 0
+        ][:3]
+
         risk_enabler = build_risk_enabler(features)
 
         db = get_db()
@@ -164,6 +191,7 @@ def predict():
                 'risk_score': risk_percentage,
                 'label': label,
                 'risk_enabler': risk_enabler,
+                'top_contributors': top_contributors
             }
             try:
                 db.predictions.insert_one(log_entry)
@@ -174,6 +202,7 @@ def predict():
             'risk_score': risk_percentage,
             'label': label,
             'risk_enabler': risk_enabler,
+            'explanations': top_contributors
         })
     except ValueError as exc:
         return jsonify({'error': str(exc)}), 400
