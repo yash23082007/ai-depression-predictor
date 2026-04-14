@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import AssessmentForm from './pages/AssessmentForm';
 import ResultDashboard from './pages/ResultDashboard';
 import About from './pages/About';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const AnimatedRoutes = () => {
     const location = useLocation();
@@ -16,6 +17,7 @@ const AnimatedRoutes = () => {
                 <Route path="/assessment" element={<AssessmentForm />} />
                 <Route path="/result" element={<ResultDashboard />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
             </Routes>
         </AnimatePresence>
     );

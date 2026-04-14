@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
 
 const Footer = () => {
@@ -23,7 +24,7 @@ const Footer = () => {
                 <div className="mb-8 p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl max-w-3xl border border-border dark:border-slate-800">
                     <p className="text-xs text-subtext dark:text-slate-400 leading-relaxed italic font-medium">
                         <span className="font-bold uppercase text-accent dark:text-amber-500 mr-2">Disclaimer:</span>
-                        This tool is intended for lifestyle awareness and educational purposes only. It is not a clinical medical diagnosis, professional psychiatric advice, or a substitute for expert treatment. If you are experiencing persistent distress or crisis, please consult a qualified healthcare professional or contact emergency services immediately.
+                        This tool is intended for lifestyle awareness and educational purposes only. It is not a clinical medical diagnosis, professional psychiatric advice, or a substitute for expert treatment. If you are experiencing persistent distress or crisis, please consult a qualified healthcare professional or contact emergency services immediately. <Link to="/privacy" className="text-primary dark:text-indigo-400 hover:underline font-bold">Read Privacy & Ethics</Link>
                     </p>
                 </div>
 
