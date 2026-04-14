@@ -18,7 +18,8 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-# React Production Build
+# Production Build
+dist/
 client/build/
 
 # IDEs
