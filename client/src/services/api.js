@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let rawApiUrl = process.env.REACT_APP_API_URL || 'https://ai-depression-predictor-2.onrender.com/api';
+let rawApiUrl = import.meta.env.VITE_API_URL || 'https://ai-depression-predictor-2.onrender.com/api';
 // Automatically fix the URL if the user forgot to add /api at the end of their Vercel environment variable
 if (rawApiUrl.endsWith('/')) rawApiUrl = rawApiUrl.slice(0, -1);
 const API_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`;
