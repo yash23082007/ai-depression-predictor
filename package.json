@@ -1,12 +1,45 @@
 {
   "name": "ai-depression-predictor",
-  "private": true,
   "version": "1.0.0",
   "type": "module",
+  "private": true,
+  "dependencies": {
+    "@gsap/react": "2.1.2",
+    "axios": "1.15.0",
+    "chart.js": "4.5.1",
+    "framer-motion": "12.38.0",
+    "gsap": "3.15.0",
+    "lucide-react": "0.454.0",
+    "react": "18.2.0",
+    "react-chartjs-2": "5.3.1",
+    "react-dom": "18.2.0",
+    "react-icons": "4.12.0",
+    "react-router-dom": "6.30.3"
+  },
   "scripts": {
-    "install-client": "cd client && npm install",
-    "build": "cd client && npm install --include=dev && CI=false npm run build",
-    "start": "cd client && npm run start"
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.9",
+    "tailwindcss": "^3.3.0",
+    "vite": "^6.4.2"
   },
   "engines": {
     "node": "20.x"
