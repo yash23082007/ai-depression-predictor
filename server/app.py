@@ -161,7 +161,18 @@ def predict():
 
         prediction_prob = float(model.predict_proba(input_df)[0][1])
         risk_percentage = round(prediction_prob * 100, 2)
-        label = 'High Risk' if risk_percentage > 50 else 'Low Risk'
+        
+        # Determine Severity Level based on report suggestions
+        if risk_percentage <= 30:
+            severity = "Low"
+        elif risk_percentage <= 60:
+            severity = "Mild"
+        elif risk_percentage <= 80:
+            severity = "Moderate"
+        else:
+            severity = "High"
+            
+        label = f"{severity} Risk"
         
         # Calculate SHAP explanations
         shap_values = explainer.shap_values(input_df)
@@ -201,6 +212,7 @@ def predict():
         return jsonify({
             'risk_score': risk_percentage,
             'label': label,
+            'severity': severity,
             'risk_enabler': risk_enabler,
             'explanations': top_contributors
         })
