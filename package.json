@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "install-client": "cd client && npm install",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd client && npm install --include=dev && CI=false npm run build",
     "start": "cd client && npm run start"
   },
   "engines": {
