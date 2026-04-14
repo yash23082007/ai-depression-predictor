@@ -1,44 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
 
 const Footer = () => {
     return (
-        <footer className="bg-transparent py-10 mt-12 border-t border-border dark:border-slate-800 transition-colors duration-300">
-            <div className="container mx-auto px-6 text-center max-w-5xl flex flex-col items-center">
-                <div className="flex justify-center space-x-6 mb-6">
-                    <a href="https://github.com/yash23082007" target="_blank" rel="noopener noreferrer" className="text-subtext dark:text-slate-400 hover:text-text dark:hover:text-slate-100 transition-colors p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full">
-                        <Github className="w-5 h-5" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/yash-vijay-b0a75937a" target="_blank" rel="noopener noreferrer" className="text-subtext dark:text-slate-400 hover:text-[#0A66C2] transition-colors p-2 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-full">
-                        <Linkedin className="w-5 h-5" />
-                    </a>
-                    <a href="https://www.instagram.com/yash_vj23" target="_blank" rel="noopener noreferrer" className="text-subtext dark:text-slate-400 hover:text-[#E1306C] transition-colors p-2 hover:bg-pink-50 dark:hover:bg-pink-900/30 rounded-full">
-                        <Instagram className="w-5 h-5" />
-                    </a>
-                    <a href="mailto:ktanayash@gmail.com" className="text-subtext dark:text-slate-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full">
-                        <Mail className="w-5 h-5" />
-                    </a>
-                </div>
-                
-                <div className="mb-8 p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl max-w-3xl border border-border dark:border-slate-800">
-                    <p className="text-xs text-subtext dark:text-slate-400 leading-relaxed italic font-medium">
-                        <span className="font-bold uppercase text-accent dark:text-amber-500 mr-2">Disclaimer:</span>
-                        This tool is intended for lifestyle awareness and educational purposes only. It is not a clinical medical diagnosis, professional psychiatric advice, or a substitute for expert treatment. If you are experiencing persistent distress or crisis, please consult a qualified healthcare professional or contact emergency services immediately. <Link to="/privacy" className="text-primary dark:text-indigo-400 hover:underline font-bold">Read Privacy & Ethics</Link>
-                    </p>
-                    <div className="mt-4 flex flex-wrap justify-center gap-4 text-[10px] md:text-xs">
-                        <a href="https://www.who.int/health-topics/depression" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-indigo-400 hover:underline">WHO Resources</a>
-                        <span className="text-border dark:text-slate-800">•</span>
-                        <a href="https://www.nimh.nih.gov/health/topics/depression" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-indigo-400 hover:underline">NIMH Guide</a>
-                        <span className="text-border dark:text-slate-800">•</span>
-                        <a href="https://www.befrienders.org/" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-indigo-400 hover:underline">International Support</a>
+        <footer className="mt-24 pb-12 pt-16 border-t border-border bg-white">
+            <div className="container mx-auto px-6 max-w-7xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                    <div>
+                        <Link to="/" className="flex items-center gap-2 group mb-6">
+                            <div className="w-8 h-8 bg-forest rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
+                                <svg className="w-5 h-5 fill-none stroke-white" strokeWidth="2" viewBox="0 0 16 16">
+                                    <path d="M8 2C4.7 2 2 4.7 2 8s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0 7c-2 0-3.7-1-4.7-2.5C4.5 8 6.1 7 8 7s3.5 1 4.7 2.5C11.7 11 10.1 12 8 12z"/>
+                                </svg>
+                            </div>
+                            <span className="text-xl font-heading font-bold text-forest tracking-tight">
+                                MindCheck
+                            </span>
+                        </Link>
+                        <p className="text-muted max-w-md leading-relaxed mb-6 font-medium text-[0.9rem]">
+                            A quietly sophisticated space for intentional reflection, leveraging explainable AI to foster mental resilience.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 className="font-bold text-ink mb-6 uppercase tracking-[0.08em] text-[0.75rem]">Resources</h4>
+                        <ul className="space-y-4 text-[0.85rem] font-medium text-muted">
+                            <li><a href="https://www.who.int/health-topics/depression" target="_blank" rel="noopener noreferrer" className="hover:text-forest transition-colors">WHO Wellbeing Guide</a></li>
+                            <li><a href="https://www.nimh.nih.gov/health/topics/depression" target="_blank" rel="noopener noreferrer" className="hover:text-forest transition-colors">NIMH Resources</a></li>
+                            <li><a href="https://www.befrienders.org/" target="_blank" rel="noopener noreferrer" className="hover:text-forest transition-colors">International Support</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 className="font-bold text-ink mb-6 uppercase tracking-[0.08em] text-[0.75rem]">Platform</h4>
+                        <ul className="space-y-4 text-[0.85rem] font-medium text-muted">
+                            <li><Link to="/" className="hover:text-forest transition-colors">Home</Link></li>
+                            <li><Link to="/assessment" className="hover:text-forest transition-colors">Assessment</Link></li>
+                            <li><Link to="/privacy" className="hover:text-forest transition-colors">Privacy & Ethics</Link></li>
+                        </ul>
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-sm text-subtext dark:text-slate-500 font-medium w-full">
-                    <p>&copy; {new Date().getFullYear()} Yash Vijay. All rights reserved.</p>
-                    <span className="hidden md:inline text-border dark:text-slate-800">•</span>
-                    <p className="flex items-center gap-1">Powered by <span className="font-semibold text-primary">MindCare AI Engine</span></p>
+                <div className="p-8 bg-ivory rounded-2xl border border-border mb-12">
+                    <p className="text-[0.75rem] text-muted leading-relaxed italic font-medium">
+                        <span className="font-bold uppercase text-forest mr-2">Clinically Responsible:</span>
+                        This tool is intended for lifestyle awareness only. It is not a clinical medical diagnosis or professional psychiatric advice. If you are experiencing persistent distress, please consult a qualified healthcare professional.
+                    </p>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-border text-[0.8rem] text-muted font-medium">
+                    <p>&copy; {new Date().getFullYear()} MindCheck. All rights reserved.</p>
+                    <p className="flex items-center gap-1.5">
+                        Designed with intentionality for <span className="text-forest font-bold">Mental Well-being</span>
+                    </p>
                 </div>
             </div>
         </footer>
@@ -46,5 +60,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
