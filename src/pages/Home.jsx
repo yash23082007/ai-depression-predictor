@@ -1,153 +1,87 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Shield, Activity, Users, Clock } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Home = () => {
-    const [showModal, setShowModal] = useState(false);
-    const [lastScore, setLastScore] = useState(null);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const savedScore = localStorage.getItem('last_checkin_score');
-        const savedDate = localStorage.getItem('last_checkin_date');
-        const savedState = localStorage.getItem('last_checkin_state');
-        if (savedScore && savedState) {
-            setLastScore({ score: savedScore, date: savedDate, state: JSON.parse(savedState) });
-        }
-    }, []);
-
-    const handlePredictClick = () => {
-        setShowModal(true);
-    };
-
-    const handleConfirm = () => {
-        setShowModal(false);
-        navigate('/assessment');
-    };
-
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center justify-center py-20 px-4 relative min-h-[90vh]"
-        >
-            {/* Hero Section */}
-            <div className="flex flex-col items-center text-center max-w-4xl w-full z-10 pt-10">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-primary text-sm font-semibold tracking-wide mb-6">
-                    <Activity className="w-4 h-4" />
-                    <span>AI-POWERED INSIGHTS</span>
+        <div className="max-w-4xl mx-auto px-6 pt-12 pb-24 text-center">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                className="space-y-10"
+            >
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-forest-faint text-forest text-[0.75rem] font-bold tracking-[0.1em] uppercase">
+                    <svg className="w-3.5 h-3.5 fill-forest" viewBox="0 0 16 16">
+                        <path d="M8 2C4.7 2 2 4.7 2 8s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0 7c-2 0-3.7-1-4.7-2.5C4.5 8 6.1 7 8 7s3.5 1 4.7 2.5C11.7 11 10.1 12 8 12z"/>
+                    </svg>
+                    Next-Gen Wellbeing AI
                 </div>
-                
-                <h1 className="text-5xl md:text-6xl font-heading font-bold text-text mb-6 leading-tight tracking-tight">
-                    Understand Your Mental Well-being
+
+                {/* Hero */}
+                <h1 className="font-heading text-6xl md:text-7xl text-ink leading-[1.1] tracking-tight">
+                    Understand the <span className="italic text-forest">Logic</span> <br /> of Your Resilience.
                 </h1>
 
-                <p className="text-lg md:text-xl text-subtext mb-12 max-w-[550px] mx-auto font-body font-medium leading-relaxed">
-                    Gain profound insights into how your lifestyle, academic pressure, and habits intersect to define your mental baseline.
+                <p className="max-w-xl mx-auto text-lg md:text-xl text-muted font-medium leading-relaxed">
+                    MindCheck moves beyond generic scores. We use explainable AI to map how your context, habits, and pressures intersect to define your mental baseline.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={handlePredictClick}
-                        className="bg-[#6366F1] text-white px-8 py-4 rounded-xl shadow-lg hover:bg-indigo-600 transition flex items-center justify-center gap-3 text-lg font-medium"
-                    >
-                        Start Assessment <ArrowRight className="w-5 h-5" />
-                    </motion.button>
-                    {lastScore && (
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => navigate('/result', { state: lastScore.state })}
-                            className="bg-white text-subtext border border-border px-8 py-4 rounded-xl shadow-sm hover:text-primary transition flex items-center justify-center gap-3 text-lg font-medium"
-                        >
-                            <Clock className="w-5 h-5" /> View Last Score
-                        </motion.button>
-                    )}
-                </div>
-            </div>
-
-            {/* Value Props / Stats */}
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl z-10 pb-20"
-            >
-                <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col items-start border border-border hover:shadow-xl transition-shadow duration-300">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 text-primary flex items-center justify-center mb-10">
-                        <Users className="w-6 h-6" />
-                    </div>
-                    <div className="text-text text-3xl font-heading font-semibold mb-2">25k+</div>
-                    <p className="text-subtext font-medium text-sm">Students Assisted</p>
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
+                    <Link to="/assessment" className="btn-forest px-10 py-4 flex items-center gap-3">
+                        Start Assessment
+                        <svg className="w-5 h-5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M6 12l4-4-4-4"/>
+                        </svg>
+                    </Link>
+                    <Link to="/about" className="btn-ghost px-10 py-4">
+                        Learn our methodology
+                    </Link>
                 </div>
 
-                <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col items-start border border-border hover:shadow-xl transition-shadow duration-300">
-                    <div className="w-12 h-12 rounded-xl bg-green-50 border border-green-100 text-secondary flex items-center justify-center mb-10">
-                        <Activity className="w-6 h-6" />
+                {/* Feature Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-24 text-left">
+                    <div className="editorial-card p-8 space-y-4">
+                        <div className="w-10 h-10 bg-forest-faint rounded-xl flex items-center justify-center text-forest">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 className="font-heading text-xl text-ink">Clinical Foundations</h3>
+                        <p className="text-[0.9rem] text-muted leading-relaxed">
+                            Based on the PHQ-9, the most widely used clinical scale for assessing wellbeing indicators.
+                        </p>
                     </div>
-                    <div className="text-text text-3xl font-heading font-semibold mb-2">Gentle</div>
-                    <p className="text-subtext font-medium text-sm">Research Backed</p>
-                </div>
 
-                <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col items-start border border-border hover:shadow-xl transition-shadow duration-300">
-                    <div className="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100 text-accent flex items-center justify-center mb-10">
-                        <Shield className="w-6 h-6" />
+                    <div className="editorial-card p-8 space-y-4">
+                        <div className="w-10 h-10 bg-forest-faint rounded-xl flex items-center justify-center text-forest">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+                            </svg>
+                        </div>
+                        <h3 className="font-heading text-xl text-ink">Privacy by Default</h3>
+                        <p className="text-[0.9rem] text-muted leading-relaxed">
+                            Your data never leaves your browser. All analysis is performed locally to ensure absolute privacy.
+                        </p>
                     </div>
-                    <div className="text-text text-3xl font-heading font-semibold mb-2">100%</div>
-                    <p className="text-subtext font-medium text-sm">Private & Secure</p>
+
+                    <div className="editorial-card p-8 space-y-4">
+                        <div className="w-10 h-10 bg-forest-faint rounded-xl flex items-center justify-center text-forest">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <h3 className="font-heading text-xl text-ink">Actionable Logic</h3>
+                        <p className="text-[0.9rem] text-muted leading-relaxed">
+                            Go beyond a simple score. Identify which lifestyle factors are impacting your current baseline most.
+                        </p>
+                    </div>
                 </div>
             </motion.div>
-
-            {/* Disclaimer Modal */}
-            <AnimatePresence>
-                {showModal && (
-                    <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-md"
-                    >
-                        <motion.div 
-                            initial={{ scale: 0.95, y: 20 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.95, y: 20 }}
-                            className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-10 relative flex flex-col text-left border border-border"
-                        >
-                            <h3 className="text-2xl font-heading font-semibold text-text mb-3">Just a quick note</h3>
-
-                            <p className="text-subtext mb-10 leading-relaxed text-sm font-body">
-                                This check-in looks at patterns in finding balance and provides gentle guidance. It is designed to encourage self-reflection and is <strong>not a clinical diagnosis</strong> or a replacement for professional care.
-                            </p>
-
-                            <div className="flex gap-4">
-                                <button
-                                    onClick={() => setShowModal(false)}
-                                    className="flex-1 py-3.5 px-4 rounded-xl font-medium text-subtext hover:bg-gray-50 border border-transparent transition-all"
-                                >
-                                    Cancel
-                                </button>
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={handleConfirm}
-                                    className="flex-1 py-3.5 px-4 bg-[#6366F1] text-white rounded-xl font-semibold hover:bg-indigo-600 shadow-lg transition-all"
-                                >
-                                    I Understand
-                                </motion.button>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.div>
+        </div>
     );
 };
 
 export default Home;
-
-

@@ -3,59 +3,62 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    background: linear-gradient(135deg, #EEF2FF, #F8FAFC);
-    color: #1E293B; /* text */
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+  :root {
+    --ivory:        #F9F7F3;
+    --white:        #FFFFFF;
+    --forest:       #2D5A3D;
+    --forest-light: #4A7C59;
+    --forest-faint: #EBF3EE;
+    --sage:         #E8F0EA;
+    --clay:         #C9784A;
+    --rose:         #C94A4A;
+    --ink:          #1A1A1A;
+    --muted:        #6B7280;
+    --border:       #E5E0D8;
   }
 
-  *:focus-visible {
-    outline: 2px solid #6366F1; /* Primary focus */
-    outline-offset: 2px;
+  body {
+    @apply bg-ivory text-ink font-body antialiased selection:bg-forest/20 selection:text-forest;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight text-ink;
   }
 }
 
 @layer components {
-  /* Premium Minimalist Card */
-  .premium-card {
-    @apply bg-white border border-border shadow-lg rounded-2xl transition-all duration-300;
-  }
-  
-  .premium-card:hover {
-    @apply shadow-xl border-indigo-200;
+  /* Editorial Card */
+  .editorial-card {
+    @apply bg-white border border-border shadow-md rounded-2xl transition-all duration-300;
   }
 
-  /* Solid, Crisp Inputs */
-  .premium-input {
-    @apply w-full p-4 bg-ink-50 border border-ink-200 rounded-xl focus:bg-white focus:border-ink-900 focus:ring-1 focus:ring-ink-900 outline-none transition-all text-ink-900 placeholder-ink-400 hover:border-ink-300;
+  .editorial-card-hover {
+    @apply hover:shadow-lg hover:-translate-y-1;
   }
 
-  /* Minimalist sleek range slider */
-  .range-slider {
-    @apply w-full h-1.5 bg-ink-200 rounded-full appearance-none flex cursor-pointer outline-none;
-  }
-  
-  .range-slider::-webkit-slider-thumb {
-    @apply appearance-none w-5 h-5 rounded-full bg-white border-2 border-ink-800 shadow-crisp cursor-grab transition-transform;
-  }
-  
-  .range-slider::-webkit-slider-thumb:hover {
-    @apply scale-110 border-ink-900;
-  }
-  
-  .range-slider::-webkit-slider-thumb:active {
-    @apply cursor-grabbing scale-95 bg-ink-100;
+  /* Primary Button */
+  .btn-forest {
+    @apply bg-forest text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 
+           hover:bg-forest-light hover:scale-[1.02] active:scale-95 shadow-lg shadow-forest/20;
   }
 
-  /* Minimalist select override for hiding default arrow where needed */
-  .minimal-select {
-    @apply appearance-none bg-transparent outline-none cursor-pointer;
+  /* Secondary Button */
+  .btn-ghost {
+    @apply bg-transparent text-muted border border-border px-6 py-3 rounded-lg font-bold 
+           transition-all duration-200 hover:border-ink hover:text-ink;
   }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-canvas;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zen-200 rounded-full hover:bg-zen-300 transition-colors;
 }

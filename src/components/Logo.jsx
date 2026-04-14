@@ -6,14 +6,17 @@ const Logo = ({ className }) => (
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    aria-hidden="true"
   >
-    {/* Interlocking Rings - representing balance, self, and reflection */}
-    <circle cx="20" cy="16" r="10" stroke="currentColor" strokeWidth="1.5" strokeOpacity="1" />
-    <circle cx="15" cy="24" r="10" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
-    <circle cx="25" cy="24" r="10" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
+    {/* Abstract Leaf/Eye - representing growth and perception */}
+    <path 
+      d="M20 5C11 15 11 25 20 35C29 25 29 15 20 5Z" 
+      stroke="currentColor" 
+      strokeWidth="2.5" 
+      strokeLinecap="round" 
+    />
+    <circle cx="20" cy="20" r="4" fill="currentColor" fillOpacity="0.8" />
   </svg>
 );
 
 export default Logo;
-
-
