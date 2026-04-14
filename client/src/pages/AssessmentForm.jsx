@@ -67,18 +67,18 @@ const AssessmentForm = () => {
             content: (
                 <div className="space-y-6">
                     <div>
-                        <label className="block text-subtext dark:text-gray-400 text-sm font-medium mb-2">Preferred Name</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full p-4 bg-[#F8FAFC] dark:bg-slate-800/50 border border-border dark:border-slate-700 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-text dark:text-white font-medium" placeholder="Nickname" required />
+                        <label htmlFor="pref_name" className="block text-subtext dark:text-gray-400 text-sm font-medium mb-2">Preferred Name</label>
+                        <input id="pref_name" type="text" name="name" value={formData.name} onChange={handleChange} className="w-full p-4 bg-[#F8FAFC] dark:bg-slate-800/50 border border-border dark:border-slate-700 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-text dark:text-white font-medium" placeholder="Nickname" required />
                     </div>
                     <div>
-                        <label className="block text-subtext dark:text-gray-400 text-sm font-medium mb-2">Age</label>
-                        <input type="number" name="age" value={formData.age} onChange={handleChange} min="15" max="99" className="w-full p-4 bg-[#F8FAFC] dark:bg-slate-800/50 border border-border dark:border-slate-700 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-text dark:text-white font-medium" placeholder="18" required />
+                        <label htmlFor="age_input" className="block text-subtext dark:text-gray-400 text-sm font-medium mb-2">Age</label>
+                        <input id="age_input" type="number" name="age" value={formData.age} onChange={handleChange} min="15" max="99" className="w-full p-4 bg-[#F8FAFC] dark:bg-slate-800/50 border border-border dark:border-slate-700 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-text dark:text-white font-medium" placeholder="18" required />
                     </div>
                     <div>
                         <label className="block text-subtext dark:text-gray-400 text-sm font-medium mb-2">Identity</label>
-                        <div className="flex bg-[#F8FAFC] dark:bg-slate-800/50 rounded-xl p-1 border border-border dark:border-slate-700">
+                        <div className="flex bg-[#F8FAFC] dark:bg-slate-800/50 rounded-xl p-1 border border-border dark:border-slate-700" role="group" aria-label="Identity Selection">
                             {['Male', 'Female', 'Other'].map(g => (
-                                <button key={g} type="button" onClick={() => setFormData({ ...formData, gender: g })} className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all ${formData.gender === g ? 'bg-white dark:bg-slate-700 text-primary dark:text-indigo-400 shadow-sm border border-indigo-100 dark:border-slate-600' : 'text-subtext dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800'}`}>
+                                <button key={g} type="button" onClick={() => setFormData({ ...formData, gender: g })} aria-pressed={formData.gender === g} className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all ${formData.gender === g ? 'bg-white dark:bg-slate-700 text-primary dark:text-indigo-400 shadow-sm border border-indigo-100 dark:border-slate-600' : 'text-subtext dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800'}`}>
                                     {g}
                                 </button>
                             ))}
@@ -143,9 +143,9 @@ const AssessmentForm = () => {
             title: "What is your sleep duration like?",
             subtitle: "Rest is the foundation of mental resilience.",
             content: (
-                <div className="space-y-4">
+                <div className="space-y-4" role="radiogroup" aria-label="Sleep Duration">
                     {['Less than 5 Hours', '5-6 Hours', '7-8 Hours', 'More than 8 Hours'].map(o => (
-                        <button key={o} type="button" onClick={() => setFormData({ ...formData, sleep_duration: o })} className={`w-full p-4 rounded-xl text-left font-medium transition-all ${formData.sleep_duration === o ? 'bg-primary text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-slate-700'}`}>
+                        <button key={o} type="button" onClick={() => setFormData({ ...formData, sleep_duration: o })} aria-checked={formData.sleep_duration === o} role="radio" className={`w-full p-4 rounded-xl text-left font-medium transition-all ${formData.sleep_duration === o ? 'bg-primary text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-slate-700'}`}>
                             {o}
                         </button>
                     ))}
@@ -156,9 +156,9 @@ const AssessmentForm = () => {
             title: "How would you describe your dietary balance?",
             subtitle: "Nourishment for your body is nourishment for your mind.",
             content: (
-                <div className="space-y-4">
+                <div className="space-y-4" role="radiogroup" aria-label="Dietary Habits">
                     {['Healthy', 'Moderate', 'Unhealthy'].map(o => (
-                        <button key={o} type="button" onClick={() => setFormData({ ...formData, dietary_habits: o })} className={`w-full p-4 rounded-xl text-left font-medium transition-all ${formData.dietary_habits === o ? 'bg-secondary text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-green-50 dark:hover:bg-slate-700'}`}>
+                        <button key={o} type="button" onClick={() => setFormData({ ...formData, dietary_habits: o })} aria-checked={formData.dietary_habits === o} role="radio" className={`w-full p-4 rounded-xl text-left font-medium transition-all ${formData.dietary_habits === o ? 'bg-secondary text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-green-50 dark:hover:bg-slate-700'}`}>
                             {o}
                         </button>
                     ))}
@@ -169,9 +169,9 @@ const AssessmentForm = () => {
             title: "Have you had thoughts of giving up lately?",
              subtitle: "This is a safe space. Your honesty helps us provide the best resources.",
             content: (
-                <div className="flex gap-4">
+                <div className="flex gap-4" role="radiogroup" aria-label="Suicidal Thoughts Selection">
                     {['No', 'Yes'].map(opt => (
-                        <button key={opt} type="button" onClick={() => setFormData({ ...formData, suicidal_thoughts: opt })} className={`flex-1 py-6 rounded-xl font-medium text-lg transition-all ${formData.suicidal_thoughts === opt ? 'bg-accent text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-orange-50 dark:hover:bg-slate-700'}`}>
+                        <button key={opt} type="button" onClick={() => setFormData({ ...formData, suicidal_thoughts: opt })} aria-checked={formData.suicidal_thoughts === opt} role="radio" className={`flex-1 py-6 rounded-xl font-medium text-lg transition-all ${formData.suicidal_thoughts === opt ? 'bg-accent text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-orange-50 dark:hover:bg-slate-700'}`}>
                             {opt}
                         </button>
                     ))}
@@ -182,9 +182,9 @@ const AssessmentForm = () => {
             title: "Any family history of mental health challenges?",
             subtitle: "Genetics can play a role, but they don't define your journey.",
             content: (
-                <div className="flex gap-4">
+                <div className="flex gap-4" role="radiogroup" aria-label="Family History Selection">
                     {['No', 'Yes'].map(opt => (
-                        <button key={opt} type="button" onClick={() => setFormData({ ...formData, family_history: opt })} className={`flex-1 py-6 rounded-xl font-medium text-lg transition-all ${formData.family_history === opt ? 'bg-primary text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-slate-700'}`}>
+                        <button key={opt} type="button" onClick={() => setFormData({ ...formData, family_history: opt })} aria-checked={formData.family_history === opt} role="radio" className={`flex-1 py-6 rounded-xl font-medium text-lg transition-all ${formData.family_history === opt ? 'bg-primary text-white shadow-md' : 'bg-[#F8FAFC] dark:bg-slate-800 text-text dark:text-white border border-border dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-slate-700'}`}>
                             {opt}
                         </button>
                     ))}

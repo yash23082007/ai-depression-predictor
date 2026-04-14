@@ -1,3 +1,5 @@
+from typing import Dict, Any, List, Optional
+from pydantic import BaseModel, Field, ValidationError, validator
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pickle
@@ -34,12 +36,26 @@ CATEGORICAL_FIELDS = {
     'family_history': 'Family History',
 }
 
-model = None
-encoders = None
-explainer = None
+# Pydantic Models for Robust Validation
+class PredictionPayload(BaseModel):
+    name: Optional[str] = Field(None, max_length=50)
+    gender: str = Field(..., pattern='^(Male|Female|Other)$')
+    age: int = Field(..., ge=15, le=99)
+    academic_pressure: int = Field(..., ge=1, le=5)
+    study_satisfaction: int = Field(..., ge=1, le=5)
+    sleep_duration: str = Field(..., pattern='^(Less than 5 Hours|5-6 Hours|7-8 Hours|More than 8 Hours)$')
+    dietary_habits: str = Field(..., pattern='^(Healthy|Moderate|Unhealthy)$')
+    suicidal_thoughts: str = Field(..., pattern='^(Yes|No)$')
+    work_hours: int = Field(..., ge=1, le=12)
+    financial_stress: int = Field(..., ge=1, le=5)
+    family_history: str = Field(..., pattern='^(Yes|No)$')
+
+model: Optional[Any] = None
+encoders: Optional[Dict[str, Any]] = None
+explainer: Optional[Any] = None
 
 
-def load_artifacts():
+def load_artifacts() -> None:
     global model, encoders
 
     try:
@@ -60,60 +76,25 @@ def load_artifacts():
         print('Error: model files not found. Please run train_model.py first.')
 
 
-def validate_payload(payload):
-    if not isinstance(payload, dict):
-        raise ValueError('Request body must be a JSON object.')
+def build_risk_enabler(features: Dict[str, Any]) -> str:
+    """Explains primary lifestyle contributors in plain English."""
+    reasons: List[str] = []
 
-    validated = {}
-
-    for request_key, (feature_name, min_value, max_value) in NUMERIC_FIELDS.items():
-        raw_value = payload.get(request_key)
-        if raw_value is None:
-            raise ValueError(f'Missing required field: {request_key}.')
-
-        try:
-            numeric_value = int(raw_value)
-        except (TypeError, ValueError) as exc:
-            raise ValueError(f'Field {request_key} must be an integer.') from exc
-
-        if numeric_value < min_value or numeric_value > max_value:
-            raise ValueError(f'Field {request_key} must be between {min_value} and {max_value}.')
-
-        validated[feature_name] = numeric_value
-
-    for request_key, feature_name in CATEGORICAL_FIELDS.items():
-        raw_value = payload.get(request_key)
-        if raw_value is None:
-            raise ValueError(f'Missing required field: {request_key}.')
-
-        allowed_values = encoders[feature_name].classes_.tolist()
-        if raw_value not in allowed_values:
-            allowed_text = ', '.join(allowed_values)
-            raise ValueError(f'Field {request_key} must be one of: {allowed_text}.')
-
-        validated[feature_name] = raw_value
-
-    return validated
-
-
-def build_risk_enabler(features):
-    reasons = []
-
-    if features['Suicidal Thoughts'] == 'Yes':
+    if features.get('suicidal_thoughts') == 'Yes':
         reasons.append('reported suicidal thoughts')
-    if features['Academic Pressure'] >= 4:
+    if features.get('academic_pressure', 0) >= 4:
         reasons.append('high academic pressure')
-    if features['Financial Stress'] >= 4:
+    if features.get('financial_stress', 0) >= 4:
         reasons.append('high financial stress')
-    if features['Sleep Duration'] in {'Less than 5 Hours', '5-6 Hours'}:
+    if features.get('sleep_duration') in {'Less than 5 Hours', '5-6 Hours'}:
         reasons.append('short sleep duration')
-    if features['Dietary Habits'] == 'Unhealthy':
+    if features.get('dietary_habits') == 'Unhealthy':
         reasons.append('unhealthy dietary habits')
-    if features['Work/Study Hours'] >= 9:
+    if features.get('work_hours', 0) >= 9:
         reasons.append('long work or study hours')
-    if features['Family History'] == 'Yes':
+    if features.get('family_history') == 'Yes':
         reasons.append('family history of depression')
-    if features['Study Satisfaction'] <= 2:
+    if features.get('study_satisfaction', 0) <= 2:
         reasons.append('low study satisfaction')
 
     if not reasons:
@@ -122,18 +103,19 @@ def build_risk_enabler(features):
     return 'Primary contributors: ' + ', '.join(reasons) + '.'
 
 
-def encode_features(features):
+def encode_features(data: PredictionPayload) -> pd.DataFrame:
+    """Prepares payload for model inference using loaded encoders."""
     return pd.DataFrame({
-        'Gender': [encoders['Gender'].transform([features['Gender']])[0]],
-        'Age': [features['Age']],
-        'Academic Pressure': [features['Academic Pressure']],
-        'Study Satisfaction': [features['Study Satisfaction']],
-        'Sleep Duration': [encoders['Sleep Duration'].transform([features['Sleep Duration']])[0]],
-        'Dietary Habits': [encoders['Dietary Habits'].transform([features['Dietary Habits']])[0]],
-        'Suicidal Thoughts': [encoders['Suicidal Thoughts'].transform([features['Suicidal Thoughts']])[0]],
-        'Work/Study Hours': [features['Work/Study Hours']],
-        'Financial Stress': [features['Financial Stress']],
-        'Family History': [encoders['Family History'].transform([features['Family History']])[0]],
+        'Gender': [encoders['Gender'].transform([data.gender])[0]],
+        'Age': [data.age],
+        'Academic Pressure': [data.academic_pressure],
+        'Study Satisfaction': [data.study_satisfaction],
+        'Sleep Duration': [encoders['Sleep Duration'].transform([data.sleep_duration])[0]],
+        'Dietary Habits': [encoders['Dietary Habits'].transform([data.dietary_habits])[0]],
+        'Suicidal Thoughts': [encoders['Suicidal Thoughts'].transform([data.suicidal_thoughts])[0]],
+        'Work/Study Hours': [data.work_hours],
+        'Financial Stress': [data.financial_stress],
+        'Family History': [encoders['Family History'].transform([data.family_history])[0]],
     })
 
 
@@ -151,13 +133,18 @@ def home():
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
+    """Predicts depression risk and returns severity, score, and SHAP explanations."""
     if model is None or encoders is None:
         return jsonify({'error': 'Model not loaded. Run train_model.py first.'}), 500
 
     try:
-        payload = request.get_json(silent=True)
-        features = validate_payload(payload)
-        input_df = encode_features(features)
+        json_data = request.get_json(silent=True)
+        if json_data is None:
+             return jsonify({'error': 'Invalid JSON payload.'}), 400
+             
+        # Pydantic validation
+        data = PredictionPayload(**json_data)
+        input_df = encode_features(data)
 
         prediction_prob = float(model.predict_proba(input_df)[0][1])
         risk_percentage = round(prediction_prob * 100, 2)
@@ -192,13 +179,13 @@ def predict():
             for name, val in feature_impacts if val > 0
         ][:3]
 
-        risk_enabler = build_risk_enabler(features)
+        risk_enabler = build_risk_enabler(data.dict())
 
         db = get_db()
         if db is not None:
             log_entry = {
                 'timestamp': datetime.datetime.now(datetime.timezone.utc),
-                'inputs': payload,
+                'inputs': json_data,
                 'risk_score': risk_percentage,
                 'label': label,
                 'risk_enabler': risk_enabler,
@@ -216,8 +203,8 @@ def predict():
             'risk_enabler': risk_enabler,
             'explanations': top_contributors
         })
-    except ValueError as exc:
-        return jsonify({'error': str(exc)}), 400
+    except ValidationError as exc:
+        return jsonify({'error': exc.errors()}), 400
     except Exception as exc:
         print(f'Prediction error: {exc}')
         return jsonify({'error': 'Prediction failed due to an internal error.'}), 500

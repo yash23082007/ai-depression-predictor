@@ -7,3 +7,7 @@ numpy
 gunicorn
 requests
 shap
+imbalanced-learn
+pydantic
+pytest
+pytest-flask
