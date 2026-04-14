@@ -1,80 +1,79 @@
-# AI Depression Risk Predictor
+# 🧠 AI Depression Predictor (Professional Edition)
 
-A FERN stack (Flask, Express-like Python, React, Node/MongoDB) application to predict student depression risk based on lifestyle factors.
+[![Deployment: Docker](https://img.shields.io/badge/Deployment-Docker-blue?logo=docker)](https://www.docker.com/)
+[![Ethics: Responsible AI](https://img.shields.io/badge/Ethics-Responsible_AI-green)](https://www.who.int/health-topics/depression)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+A production-grade, ethical, and explainable mental health assessment tool designed to lower the barrier for seeking help through AI-driven insights and conversational UI.
 
-[![Deploy Backend](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/yash23082007/ai-depression-predictor)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yash23082007/ai-depression-predictor/tree/main/client)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yash23082007/ai-depression-predictor)
+## 🗺️ Architecture Overview
 
-## Links
-- **Live Demo:** [depressionana.in](https://depressionana.in) (Coming Soon)
-- **Repository:** [github.com/yash23082007/ai-depression-predictor](https://github.com/yash23082007/ai-depression-predictor)
+```mermaid
+graph TD
+    User((User)) -->|Interacts| Client[React Web App]
+    Client -->|POST /api/predict| API[Flask Backend]
+    
+    subgraph Backend
+        API -->|Validates| Schema[Pydantic Models]
+        Schema -->|Encodes| Pre[Preprocess Layer]
+        Pre -->|Inference| Model[Random Forest Ensemble]
+        Model -->|Explains| XAI[SHAP Engine]
+        XAI -->|Returns| Response[JSON: Score, Severity, Explainers]
+    end
+    
+    subgraph Training
+        Data[Synthetic Dataset v1] -->|SMOTE| Balance[Balanced Data]
+        Balance -->|Stratified k-Fold| Train[Training Pipeline]
+        Train -->|Artifacts| Models[Saved Models/Encoders]
+    end
 
-## Table of Contents
-- [About](#about)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Setup & Installation](#setup--installation)
-- [Usage](#usage)
+    Response -->|Visualizes| Dashboard[Result Dashboard]
+    Response -->|Triggers| Guardrail[Safety Modal/Hotlines]
+```
 
-## About
-This project uses a Random Forest Classifier trained on 25,000 synthetic student records to predict the risk of depression. It is designed to be privacy-focused, storing only anonymous data for analytics.
+## 🛠️ Tech Stack & Key Features
 
-**Developed by:** Yash Vijay
+- **Frontend**: React 18, Tailwind CSS (Dual Theme), Framer Motion, Lucide Icons.
+- **Backend**: Flask, Pydantic (Validation), SHAP (Explainability).
+- **ML Engine**: Scikit-Learn (Random Forest Ensemble), Imbalanced-Learn (SMOTE).
+- **Ethics & Safety**: Context-aware Crisis resources, Medically-reviewed disclaimers, Privacy-first ephemeral processing.
 
-## Features
-- **AI-Driven Prediction:** Random Forest model with high accuracy.
-- **Interactive Assessment:** 10-question assessment with dynamic UI.
-- **Real-time Visualization:** Gauge chart for risk scores.
-- **Privacy First:** No PII is permanently stored.
+## 🚀 Quick Start (Dockerized)
 
-## Tech Stack
-- **Frontend:** React.js, Tailwind CSS (Light Mode)
-- **Backend:** Flask (Python)
-- **AI/ML:** Scikit-Learn, Pandas
-- **Database:** MongoDB
+Ensure you have [Docker](https://www.docker.com/) installed.
 
-## Setup & Installation
-
-### Prerequisites
-- Python 3.8+
-- Node.js & npm
-- MongoDB (running locally or Atlas URI)
-
-### Backend
-1. Navigate to `server`:
+1. **Clone & Spin up**:
    ```bash
-   cd server
+   git clone https://github.com/yash23082007/ai-depression-predictor.git
+   cd ai-depression-predictor
+   docker-compose up --build
    ```
-2. Create virtual environment and install dependencies:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-3. Train the model:
-   ```bash
-   python train_model.py
-   ```
-4. Run the server:
-   ```bash
-   python app.py
-   ```
+2. **Access**:
+   - Frontend: `http://localhost:3001`
+   - Backend API: `http://localhost:5001`
 
-### Frontend
-1. Navigate to `client`:
-   ```bash
-   cd client
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the application:
-   ```bash
-   npm start
-   ```
+## 🔬 Research Context & Methodology
 
-## Usage
-Visit `http://localhost:3000` to access the application.
+### Dataset Disclosure
+This application uses **Synthetic Dataset v1** (25,000 records). While the patterns are modeled after common academic and occupational stressors, the predictions are strictly based on synthetic patterns and **should not be used as a clinical diagnosis.**
+
+### Model Optimization
+- **Ensemble Approach**: Uses a Random Forest Classifier cross-validated with `StratifiedKFold`.
+- **Imbalance Handling**: Employs **SMOTE** (Synthetic Minority Over-sampling Technique) to ensure the model sensitively detects depressive indicators even when they are underrepresented in raw data.
+- **Explainability**: Integrated **SHAP** (Shapley Additive Explanations) to provides per-prediction transparency, showing users exactly which lifestyle factors influenced their specific score.
+
+## ⚠️ Limitations & Ethical Boundaries
+- **Non-Diagnostic**: This tool provides a pattern-based check-in, not a medical result.
+- **Regional Bias**: Currently optimized for academic/student lifestyle patterns.
+- **Data Privacy**: All processing is ephemeral. User data is not sold or shared.
+
+## 🧪 Testing
+Run the comprehensive safety and validation suite:
+```bash
+cd server
+pytest
+```
+
+---
+**Developed with ❤️ by Yash Vijay**  
+*The goal is not to replace clinical care, but to make it easier to start the conversation.*

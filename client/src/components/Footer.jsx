@@ -26,6 +26,13 @@ const Footer = () => {
                         <span className="font-bold uppercase text-accent dark:text-amber-500 mr-2">Disclaimer:</span>
                         This tool is intended for lifestyle awareness and educational purposes only. It is not a clinical medical diagnosis, professional psychiatric advice, or a substitute for expert treatment. If you are experiencing persistent distress or crisis, please consult a qualified healthcare professional or contact emergency services immediately. <Link to="/privacy" className="text-primary dark:text-indigo-400 hover:underline font-bold">Read Privacy & Ethics</Link>
                     </p>
+                    <div className="mt-4 flex flex-wrap justify-center gap-4 text-[10px] md:text-xs">
+                        <a href="https://www.who.int/health-topics/depression" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-indigo-400 hover:underline">WHO Resources</a>
+                        <span className="text-border dark:text-slate-800">•</span>
+                        <a href="https://www.nimh.nih.gov/health/topics/depression" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-indigo-400 hover:underline">NIMH Guide</a>
+                        <span className="text-border dark:text-slate-800">•</span>
+                        <a href="https://www.befrienders.org/" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-indigo-400 hover:underline">International Support</a>
+                    </div>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-sm text-subtext dark:text-slate-500 font-medium w-full">
