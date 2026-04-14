@@ -1,0 +1,14 @@
+{
+  "name": "ai-depression-predictor",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "install-client": "cd client && npm install",
+    "build": "cd client && npm install && npm run build",
+    "start": "cd client && npm run start"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
