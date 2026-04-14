@@ -60,5 +60,5 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-zen-200 rounded-full hover:bg-zen-300 transition-colors;
+  @apply bg-border rounded-full hover:bg-muted transition-colors;
 }
