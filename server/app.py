@@ -9,11 +9,11 @@ import datetime
 import shap
 from db import get_db
 
-app = Flask(__name__)
-# Allow local dev and the deployed Vercel frontend
+# Allow local dev and Vercel domains (including previews)
 CORS(app, resources={r"/*": {"origins": [
     "http://localhost:3000",
-    "https://ai-depression-predictor.vercel.app"
+    "https://ai-depression-predictor.vercel.app",
+    r"https://ai-depression-predictor-.*\.vercel\.app"
 ]}})
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -128,6 +128,18 @@ def home():
         'message': 'AI Depression Risk Predictor API is running.',
         'model_loaded': model is not None and encoders is not None,
         'training_data': '25,000 synthetic records',
+    })
+
+
+@app.route('/api/health', methods=['GET'])
+def health():
+    """Health check endpoint for deployment monitoring."""
+    status = 'healthy' if model is not None else 'degraded'
+    return jsonify({
+        'status': status,
+        'timestamp': datetime.datetime.now(datetime.timezone.utc),
+        'model_loaded': model is not None,
+        'db_connected': get_db() is not None
     })
 
 

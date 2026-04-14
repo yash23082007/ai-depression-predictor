@@ -157,6 +157,29 @@ const ResultDashboard = () => {
                 Your Baseline Analysis
             </motion.h2>
 
+            {isCrisis && (
+                <motion.div 
+                    variants={itemVariants}
+                    className="w-full mb-10 p-6 bg-red-50 dark:bg-red-950/30 border-2 border-red-200 dark:border-red-900/50 rounded-3xl flex flex-col md:flex-row items-center gap-6 shadow-lg shadow-red-500/5"
+                >
+                    <div className="bg-red-500 p-4 rounded-2xl shadow-lg animate-pulse">
+                        <AlertCircle className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="flex-grow text-center md:text-left">
+                        <h3 className="text-xl font-bold text-red-700 dark:text-red-400 mb-1">Immediate Support is Available</h3>
+                        <p className="text-red-600 dark:text-red-300/80 font-medium text-sm">
+                            Your baseline analysis suggests you are carrying a heavy load right now. You don't have to face it alone. 
+                            <span className="block mt-2 font-bold bg-white/50 dark:bg-black/20 p-2 rounded-lg inline-block">
+                                India: 9152987821 (iCall) • US: 988 (Crisis Line) • Intl: Befrienders.org
+                            </span>
+                        </p>
+                    </div>
+                    <a href="https://www.befrienders.org/" target="_blank" rel="noopener noreferrer" className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-2xl font-bold transition-all shadow-lg shadow-red-600/20 whitespace-nowrap">
+                        Get Help Now
+                    </a>
+                </motion.div>
+            )}
+
             <div className="grid md:grid-cols-5 gap-8 w-full">
                 {/* Score & SHAP Section */}
                 <div className="md:col-span-2 space-y-6">
