@@ -25,9 +25,12 @@ const FrictionMap = ({ areas }) => (
       {areas.map((area) => (
         <article key={area.id} className="border border-border rounded-xl p-4 bg-ivory">
           <p className="font-semibold text-ink">{area.label}</p>
-          <span className={`inline-block mt-2 text-xs px-2.5 py-1 rounded-full font-semibold ${levelStyle[area.level]}`}>
+          <span className={`inline-block mt-2 mb-2 text-xs px-2.5 py-1 rounded-full font-semibold ${levelStyle[area.level]}`}>
             {levelCopy[area.level]}
           </span>
+          <p className="text-xs text-muted leading-relaxed">
+            {area.explanation}
+          </p>
         </article>
       ))}
     </div>

@@ -14,11 +14,13 @@ const getDb = () => openDB(DB_NAME, 1, {
 
 export const saveCheckIn = async (checkIn) => {
   const db = await getDb();
-  return db.put(STORE_NAME, {
-    id: crypto.randomUUID(),
+  const id = crypto.randomUUID();
+  await db.put(STORE_NAME, {
+    id,
     createdAt: new Date().toISOString(),
     ...checkIn,
   });
+  return id;
 };
 
 export const getCheckIns = async () => {
@@ -40,4 +42,13 @@ export const exportCheckIns = async () => {
   anchor.download = 'mindcheck-private-export.json';
   anchor.click();
   URL.revokeObjectURL(url);
+};
+
+export const updateCheckInFeedback = async (id, feedback) => {
+  const db = await getDb();
+  const checkIn = await db.get(STORE_NAME, id);
+  if (checkIn) {
+    checkIn.actionFeedback = feedback;
+    return db.put(STORE_NAME, checkIn);
+  }
 };
