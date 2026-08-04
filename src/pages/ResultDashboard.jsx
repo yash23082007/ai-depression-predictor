@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import FrictionMap from '../components/FrictionMap';

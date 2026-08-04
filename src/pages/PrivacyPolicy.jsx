@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 const PrivacyPolicy = () => <main className="max-w-3xl mx-auto px-6 py-14">
