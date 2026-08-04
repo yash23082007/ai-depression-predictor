@@ -3,10 +3,12 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import FrictionMap from '../components/FrictionMap';
 import SafetySupportPanel from '../components/SafetySupportPanel';
+import MessageDrafter from '../components/MessageDrafter';
+import TaskBreakdown from '../components/TaskBreakdown';
+import PrivacyReceipt from '../components/PrivacyReceipt';
 import { buildFrictionMap } from '../lib/frictionMap';
 import { chooseActions } from '../lib/actionPlanner';
 import { saveCheckIn, updateCheckInFeedback } from '../lib/checkinStore';
-import PrivacyReceipt from '../components/PrivacyReceipt';
 
 const EMPTY_ANSWERS = [];
 
@@ -20,12 +22,14 @@ const rangeStyle = {
 const ResultDashboard = () => {
   const { state } = useLocation();
   const shouldReduceMotion = useReducedMotion();
+  
   const [selectedAction, setSelectedAction] = useState(null);
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState('');
   const [savedId, setSavedId] = useState(null);
   const [showReflectionRange, setShowReflectionRange] = useState(false);
   const [feedbackGiven, setFeedbackGiven] = useState(false);
+  const [activeTool, setActiveTool] = useState(null);
 
   const result = state?.result;
   const answers = Array.isArray(state?.answers) ? state.answers : EMPTY_ANSWERS;
@@ -37,7 +41,7 @@ const ResultDashboard = () => {
     ? new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(new Date(result.timestamp))
     : '';
 
-  if (!result || !Array.isArray(state?.answers)) return <Navigate to="/assessment" replace />;
+  if (!result || !Array.isArray(state?.answers)) return <Navigate to="/check-in" replace />;
 
   const handleSave = async () => {
     try {
@@ -101,21 +105,43 @@ const ResultDashboard = () => {
         <div className="p-6 sm:p-10">
           <FrictionMap areas={frictionMap} />
 
-          <section className="mb-8" aria-labelledby="next-step-title">
+          <section className="mb-8 mt-10" aria-labelledby="next-step-title">
             <h2 id="next-step-title" className="text-lg font-bold mb-2">Choose one small next step</h2>
             <p className="text-sm text-muted mb-4">You are in control. Pick an option only if it feels realistic today.</p>
             <div className="space-y-3">
               {actions.map((action) => {
                 const selected = selectedAction === action.id;
                 return (
-                  <button key={action.id} type="button" onClick={() => setSelectedAction(action.id)} className={`w-full text-left border rounded-xl p-4 transition-colors ${selected ? 'border-forest bg-sage' : 'border-border hover:border-forest bg-ivory'}`}>
-                    <div className="flex justify-between gap-3">
-                      <h3 className="font-bold text-ink">{action.title}</h3>
-                      <span className="text-xs text-muted whitespace-nowrap">{action.minutes} min</span>
-                    </div>
-                    <p className="text-sm mt-2 leading-relaxed">{action.instruction}</p>
-                    <p className="text-xs text-muted mt-3">{action.note}</p>
-                  </button>
+                  <div key={action.id}>
+                    <button type="button" onClick={() => setSelectedAction(selected ? null : action.id)} className={`w-full text-left border rounded-xl p-4 transition-colors ${selected ? 'border-forest bg-sage' : 'border-border hover:border-forest bg-ivory'}`}>
+                      <div className="flex justify-between gap-3">
+                        <h3 className="font-bold text-ink">{action.title}</h3>
+                        <span className="text-xs text-muted whitespace-nowrap">{action.minutes} min</span>
+                      </div>
+                    </button>
+                    
+                    {selected && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="p-5 mt-2 bg-white rounded-xl border border-forest/20 text-[0.9rem] shadow-sm">
+                        <p className="text-ink leading-relaxed mb-4">{action.instruction}</p>
+                        
+                        {action.id === 'trusted-message' && (
+                          <button onClick={() => setActiveTool('drafter')} className="btn-forest py-2 px-4 text-sm mb-4 w-full sm:w-auto">Open Message Drafter</button>
+                        )}
+                        {action.id === 'minimum-task' && (
+                          <button onClick={() => setActiveTool('breakdown')} className="btn-forest py-2 px-4 text-sm mb-4 w-full sm:w-auto">Open Task Breakdown</button>
+                        )}
+
+                        <div className="bg-sage/30 p-3 rounded-lg text-[0.8rem] text-forest mb-4">
+                          <strong className="block mb-1">User Control</strong>
+                          {action.userControl}
+                        </div>
+                        <div className="bg-red-50 p-3 rounded-lg text-[0.8rem] text-red-800 mb-4">
+                          <strong className="block mb-1">Safety Note</strong>
+                          {action.safetyNote}
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
                 );
               })}
             </div>
@@ -158,16 +184,19 @@ const ResultDashboard = () => {
             </section>
           )}
 
-          <PrivacyReceipt saved={saved} hasSafetyAnswer={hasSafetyAnswer} />
+          <PrivacyReceipt />
 
           <footer className="text-center pt-8 mt-8 border-t border-border">
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/assessment" className="btn-ghost inline-flex py-2 px-5 text-[0.85rem]">Retake check-in</Link>
+              <Link to="/check-in" className="btn-ghost inline-flex py-2 px-5 text-[0.85rem]">Retake check-in</Link>
               <Link to="/my-data" className="btn-ghost inline-flex py-2 px-5 text-[0.85rem]">My local data</Link>
             </div>
           </footer>
         </div>
       </motion.main>
+
+      {activeTool === 'drafter' && <MessageDrafter onClose={() => setActiveTool(null)} />}
+      {activeTool === 'breakdown' && <TaskBreakdown onClose={() => setActiveTool(null)} />}
     </div>
   );
 };

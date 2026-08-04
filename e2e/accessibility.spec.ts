@@ -20,4 +20,24 @@ test.describe('Accessibility and UI Tests', () => {
     // Verify question 2
     await expect(page.getByText('Question 2 of 9')).toBeVisible();
   });
+
+  test('can clear check-in form', async ({ page }) => {
+    await page.goto('/check-in');
+    
+    // Answer first question
+    const locator = page.locator('button[role="radio"]').first();
+    await locator.click();
+    
+    // Go to next
+    await page.getByRole('button', { name: 'Next question' }).click();
+    await expect(page.getByText('Question 2 of 9')).toBeVisible();
+
+    // Click clear
+    page.on('dialog', dialog => dialog.accept());
+    await page.getByRole('button', { name: 'Clear' }).click();
+
+    // Verify back to question 1 and unchecked
+    await expect(page.getByText('Question 1 of 9')).toBeVisible();
+    await expect(page.locator('button[role="radio"]').first()).toHaveAttribute('aria-checked', 'false');
+  });
 });

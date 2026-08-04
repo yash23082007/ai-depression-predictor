@@ -80,7 +80,37 @@ const AssessmentForm = () => {
   return (
     <div className="max-w-[680px] mx-auto px-6 pt-12 pb-12">
       {showSafetyPause && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-5" role="dialog" aria-modal="true" aria-labelledby="safety-pause-title">
+        <div 
+          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-5" 
+          role="dialog" 
+          aria-modal="true" 
+          aria-labelledby="safety-pause-title"
+          onKeyDown={(e) => {
+            if (e.key === 'Tab') {
+              const focusableElements = e.currentTarget.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+              const firstElement = focusableElements[0];
+              const lastElement = focusableElements[focusableElements.length - 1];
+              
+              if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                  lastElement.focus();
+                  e.preventDefault();
+                }
+              } else {
+                if (document.activeElement === lastElement) {
+                  firstElement.focus();
+                  e.preventDefault();
+                }
+              }
+            }
+          }}
+          ref={(el) => {
+            if (el && !el.contains(document.activeElement)) {
+              const firstFocusable = el.querySelector('button, [href]');
+              if (firstFocusable) firstFocusable.focus();
+            }
+          }}
+        >
           <div className="max-w-xl w-full bg-white rounded-2xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <h1 id="safety-pause-title" className="sr-only">Safety support</h1>
             <SafetySupportPanel compact />
@@ -95,7 +125,20 @@ const AssessmentForm = () => {
       <div className="mb-10">
         <div className="flex justify-between items-baseline mb-3">
           <span className="text-[0.82rem] font-semibold text-forest uppercase tracking-[0.08em]">MindCheck private check-in</span>
-          <span className="text-[0.82rem] text-muted">Question {currentQ + 1} of {questions.length}</span>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => {
+                if (window.confirm('Clear all answers and start over?')) {
+                  setAnswers(new Array(questions.length).fill(null));
+                  setCurrentQ(0);
+                }
+              }}
+              className="text-[0.75rem] text-red-600 hover:text-red-700 underline"
+            >
+              Clear
+            </button>
+            <span className="text-[0.82rem] text-muted">Question {currentQ + 1} of {questions.length}</span>
+          </div>
         </div>
         <div className="h-[5px] bg-border rounded-full overflow-hidden">
           <motion.div className="h-full bg-gradient-to-r from-forest to-forest-light rounded-full" initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: shouldReduceMotion ? 0 : 0.35 }} />

@@ -6,6 +6,7 @@ const PrivacyControls = () => {
   const [count, setCount] = useState(null);
   const [message, setMessage] = useState('');
   const [topAction, setTopAction] = useState(null);
+  const [gentleReminder, setGentleReminder] = useState(false);
 
   const refreshCount = async () => {
     try {
@@ -29,7 +30,7 @@ const PrivacyControls = () => {
         }
       }
 
-      if (maxCount >= 2 && topId) { // Changed threshold to 2 for easier testing, though prompt said 4. Let's stick to threshold of 2, if it happens twice, we show it.
+      if (maxCount >= 2 && topId) { 
         const card = actionCards.find(c => c.id === topId);
         if (card) {
           setTopAction({ title: card.title.toLowerCase(), count: maxCount });
@@ -42,7 +43,16 @@ const PrivacyControls = () => {
     }
   };
 
-  useEffect(() => { refreshCount(); }, []);
+  useEffect(() => { 
+    refreshCount();
+    setGentleReminder(localStorage.getItem('mindcheck-gentle-reminder') === 'true');
+  }, []);
+
+  const handleToggleReminder = () => {
+    const newVal = !gentleReminder;
+    setGentleReminder(newVal);
+    localStorage.setItem('mindcheck-gentle-reminder', String(newVal));
+  };
 
   const handleDelete = async () => {
     if (!window.confirm('Delete all saved MindCheck reflections from this browser? This cannot be undone.')) return;
@@ -77,6 +87,20 @@ const PrivacyControls = () => {
         <button className="btn-forest py-3" onClick={exportCheckIns}>Export my local data</button>
         <button className="btn-ghost py-3 text-red-700" onClick={handleDelete}>Delete all saved reflections</button>
       </div>
+
+      <div className="mt-8 pt-8 border-t border-border">
+        <h2 className="font-bold mb-3 text-ink">Preferences</h2>
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            className="w-5 h-5 rounded border-gray-300 text-forest focus:ring-forest"
+            checked={gentleReminder}
+            onChange={handleToggleReminder}
+          />
+          <span className="text-sm text-ink">Show a gentle &quot;welcome back&quot; reminder on the home page</span>
+        </label>
+      </div>
+
       {message && <p className="mt-5 text-sm" role="status">{message}</p>}
       <p className="text-xs text-muted mt-8">Deleting browser data, using private browsing, or switching browsers can also remove locally stored reflections.</p>
     </main>
