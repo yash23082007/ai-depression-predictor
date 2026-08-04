@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import SafetySupportPanel from '../components/SafetySupportPanel';
 
 const questions = [
@@ -31,6 +31,7 @@ const getReflectionRange = (score) => {
 
 const AssessmentForm = () => {
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState(new Array(questions.length).fill(null));
   const [showSafetyPause, setShowSafetyPause] = useState(false);
@@ -97,7 +98,7 @@ const AssessmentForm = () => {
           <span className="text-[0.82rem] text-muted">Question {currentQ + 1} of {questions.length}</span>
         </div>
         <div className="h-[5px] bg-border rounded-full overflow-hidden">
-          <motion.div className="h-full bg-gradient-to-r from-forest to-forest-light rounded-full" initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: 0.35 }} />
+          <motion.div className="h-full bg-gradient-to-r from-forest to-forest-light rounded-full" initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: shouldReduceMotion ? 0 : 0.35 }} />
         </div>
       </div>
 
