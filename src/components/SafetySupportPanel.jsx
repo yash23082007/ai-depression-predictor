@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { supportResources } from '../data/supportResources';
 
 const SafetySupportPanel = ({ compact = false }) => (

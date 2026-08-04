@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const About = () => <main className="max-w-3xl mx-auto px-6 py-14">
   <p className="text-forest font-bold uppercase tracking-[.14em] text-sm">Method and limits</p>

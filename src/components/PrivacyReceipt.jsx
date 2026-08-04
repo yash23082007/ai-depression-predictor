@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const PrivacyReceipt = ({ saved, hasSafetyAnswer }) => (
   <section className="mt-7 p-5 rounded-xl bg-emerald-50 border border-emerald-200" aria-labelledby="privacy-receipt-title">
