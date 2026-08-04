@@ -35,7 +35,7 @@ test.describe('Safety Flow Tests', () => {
     await page.getByText('Several days').click();
     
     // Next shows safety support panel
-    await page.getByRole('button', { name: 'Next' }).click();
+    await page.getByRole('button', { name: 'See my private summary' }).click();
     
     // Continue to summary
     await page.getByRole('button', { name: 'Continue to private summary' }).click();
@@ -58,14 +58,14 @@ test.describe('Safety Flow Tests', () => {
     await page.getByText('Several days').click();
     
     // Next shows safety support panel
-    await page.getByRole('button', { name: 'Next' }).click();
+    await page.getByRole('button', { name: 'See my private summary' }).click();
     
     // Wait for modal
     const modal = page.getByRole('dialog');
     await expect(modal).toBeVisible();
 
     // The first focusable element should be focused by our ref
-    await expect(page.getByRole('link', { name: 'Befrienders Worldwide' })).toBeFocused();
+    await expect(page.getByRole('link', { name: 'Find local crisis support' })).toBeFocused();
     
     // Tab forward
     await page.keyboard.press('Tab');
